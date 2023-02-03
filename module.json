@@ -1,0 +1,14 @@
+{
+  "name": "jornworldforfoundryvtt",
+  "title": "Grim Hollow Weapon Properties",
+  "description": "Adds modifications for the Jorn world custom rules",
+  "version": "0.1",
+  "author": "Candarin",
+  "systems": ["dnd5e"],
+  "styles": [],
+  "scripts": ["jornwepprop.js"],
+  "manifest": "https://.../main/module.json",
+  "download": "https://.../archive/main.zip",
+  "minimumCoreVersion": "0.7.0",
+  "compatibleCoreVersion": "0.7.9"
+}
