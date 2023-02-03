@@ -1,2 +1,2 @@
 # JornForFoundryVTT
-Jorn world mod for DnD5e on Foundry
+Jorn world mod for the DnD5e system on Foundry VTT
