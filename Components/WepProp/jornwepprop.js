@@ -1,4 +1,4 @@
-import { debouncedReload, rootStyle } from '../util.js';
+import { debouncedReload, rootStyle } from '../utils.js';
 
 export default class JornWepProp {
 
