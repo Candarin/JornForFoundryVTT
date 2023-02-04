@@ -9,7 +9,7 @@
       "email": "candarinfall@gmail.com"
     }
   ],
-  "version": "0.0.7",
+  "version": "0.0.8",
   "compatibility": {
     "minimum": "10.286",
     "verified": "10.291",
@@ -17,15 +17,19 @@
   },
   "minimumCoreVersion": "10",  
   
-  "scripts": [
+  "esmodules": [
     "jornworld.js"
   ],
-  "systems": [
-    "dnd5e"
-  ],
-     
+  "relationships": {
+    "systems": [
+      {
+        "id": "dnd5e"
+      }
+    ]
+  },
+       
   "url": "https://github.com/Candarin/JornForFoundryVTT",
   "manifest": "https://raw.githubusercontent.com/Candarin/JornForFoundryVTT/main/module.json",
-  "download": "https://github.com/Candarin/JornForFoundryVTT/archive/v0.0.7.zip",
+  "download": "https://github.com/Candarin/JornForFoundryVTT/archive/v0.0.8.zip",
   "readme": "https://raw.githubusercontent.com/Candarin/JornForFoundryVTT/main/README.md"
 }
