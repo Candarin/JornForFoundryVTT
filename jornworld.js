@@ -1,4 +1,5 @@
 import JornWepProp from './Components/WepProp/jornwepprop.js'
+import jornIntoxication from './Components/Intoxication/jornIntoxication.js'
 
 class JornWorld {
 
@@ -6,12 +7,14 @@ class JornWorld {
 
 Hooks.once('init', () => {
 
-    /** initilize settings */
+    // Weapon Properties - Init settings and hook   
     JornWepProp.initSettings();
-    /** -------- */
-
-
-    /** initilize hooks */
     JornWepProp.initHooks();
-    /** -------- */
+ 
+
+    // Intoxication - Init settings and hook
+    jornIntoxication.initSettings();
+    jornIntoxication.initHooks();
+
+
 })
