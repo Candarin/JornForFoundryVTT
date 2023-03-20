@@ -24,6 +24,7 @@ export default class jornIntoxication {
 
             // Add Intox Save callback
             function _intoxChatListeners(app, html, data) {
+                console.log('Jorn | _intoxChatListeners fired: ' + this)
                 html.on("click", '.jorn-drinking-savingthrow', onIntoxSavingThrow.bind(this))
             }
 
