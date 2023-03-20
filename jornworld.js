@@ -5,7 +5,12 @@ class JornWorld {
 
 }
 
+/* ------------------------------------ */
+/* Initialize module					*/
+/* ------------------------------------ */
+
 Hooks.once('init', () => {
+    console.log('Jorn | Initializing Jorn');
 
     // Weapon Properties - Init settings and hook   
     JornWepProp.initSettings();

@@ -23,30 +23,23 @@ export default class jornIntoxication {
         if (game.settings.get('JornForFoundryVTT', 'useintoxicationflags') === true) {
 
             // Add Intox Save callback
-            Hooks.on('ready', () => {
+            function _intoxChatListeners(html) {
+                html.on("click", '.jorn-drinking-savingthrow', onIntoxSavingThrow.bind(this))
+            }
 
-                $(document).on('click', '.jorn-drinking-savingthrow', function () {
-                    console.log('JORN: Intox Saving Throw button click captured');
-                    /* Passed Values
-                        data-actor-id=${actor.id} 
-                        data-drink-strength=${selectedDrinkTypeStrength} 
-                        data-saving-throw-dc=${intoxSaveDC}
-                    */
-
-                    //var x = ($(this).data('actor-id'));
-
-
-
-                });
-
-                
-
-
-            });
-
-
-
+            Hooks.on("renderChatLog", (app, html, data) => _intoxChatListeners(html));                                      
         }
-    }
+    }   
+}
 
+export async function onIntoxSavingThrow(event) {
+
+    /* Passed Values
+        data-actor-id=${actor.id} 
+        data-drink-strength=${selectedDrinkTypeStrength} 
+        data-saving-throw-dc=${intoxSaveDC}
+    */
+    //var x = ($(this).data('actor-id'));
+
+    console.log('Jorn | Intox Saving Throw button click captured');
 }
