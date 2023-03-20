@@ -21,14 +21,15 @@ export default class jornIntoxication {
 
         // Check settings flag        
         if (game.settings.get('JornForFoundryVTT', 'useintoxicationflags') === true) {
+            console.log('Jorn | Initialising Intoxication Hooks')
 
             // Add Intox Save callback
-            function _intoxChatListeners(app, html, data) {
+            function _intoxChatListeners(html) {
                 console.log('Jorn | _intoxChatListeners fired: ' + this)
                 html.on("click", '.jorn-drinking-savingthrow', onIntoxSavingThrow.bind(this))
             }
 
-            Hooks.on("renderChatLog", (app, html, data) => _intoxChatListeners(app, html, data));                                      
+            Hooks.on("renderChatLog", (app, html, data) => _intoxChatListeners(html));                                      
         }
     }   
 }
