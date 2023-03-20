@@ -33,13 +33,16 @@ export default class jornIntoxication {
 }
 
 export async function onIntoxSavingThrow(event) {
-
+    console.log('Jorn | Intox Saving Throw button click captured');
     /* Passed Values
         data-actor-id=${actor.id} 
         data-drink-strength=${selectedDrinkTypeStrength} 
         data-saving-throw-dc=${intoxSaveDC}
     */
-    //var x = ($(this).data('actor-id'));
+    let actorId = ($(this).data('actor-id'));
 
-    console.log('Jorn | Intox Saving Throw button click captured');
+    let a = game.actors.get(actorId);
+
+    a.rollAbilitySave("con");
+
 }
