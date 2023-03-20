@@ -24,7 +24,7 @@ export default class JornWepProp {
         if (game.settings.get('JornForFoundryVTT', 'useinferiormaterials') === true) {
 
             
-            Hooks.on('ready', () => {
+            // Hooks.on('ready', () => {
 
                 // weapons
                 CONFIG.DND5E.weaponProperties['inf'] = 'Inferior Material';
@@ -36,7 +36,7 @@ export default class JornWepProp {
                 CONFIG.DND5E.armorProperties['des'] = 'Destroyed';
                 
 
-            });                      
+            // });                      
 
 
 

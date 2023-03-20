@@ -23,11 +23,11 @@ export default class jornIntoxication {
         if (game.settings.get('JornForFoundryVTT', 'useintoxicationflags') === true) {
 
             // Add Intox Save callback
-            function _intoxChatListeners(html) {
+            function _intoxChatListeners(app, html, data) {
                 html.on("click", '.jorn-drinking-savingthrow', onIntoxSavingThrow.bind(this))
             }
 
-            Hooks.on("renderChatLog", (app, html, data) => _intoxChatListeners(html));                                      
+            Hooks.on("renderChatLog", (app, html, data) => _intoxChatListeners(app, html, data));                                      
         }
     }   
 }
@@ -40,10 +40,11 @@ export async function onIntoxSavingThrow(event) {
         data-saving-throw-dc=${intoxSaveDC}
     */
     console.log('Jorn | Intox Saving Throw Data: ' + this)
+    console.log('Jorn | Intox Saving Throw Data: ' + event)
     let actorId = ($(this).data('actor-id'));
     let a = game.actors.get(actorId);
     console.log('Jorn | actor: ' + actorId + ' ' + a.name)
 
     a.rollAbilitySave("con");
 
-}
+} 
