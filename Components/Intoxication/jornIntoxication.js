@@ -46,14 +46,17 @@ export async function onIntoxSavingThrow(event) {
         data-drink-strength=${selectedDrinkTypeStrength} 
         data-saving-throw-dc=${intoxSaveDC}
     */
-    console.log('Jorn | Intox Saving Throw Data: ' + this);
+    
     console.log('Jorn | Intox Saving Throw Data: ');
     console.log(event);
 
-    let actorId = ($(this).data('actor-id'));
+    let actorId = event.target.dataset.actorId;
+
+    // let actorId = ($(this).data('actor-id'));
+
     let a = game.actors.get(actorId);
     
-    console.log('Jorn | actor: ' + actorId + ' ' + a.name);
+    console.log('Jorn | actor: ' + actorId + ', ' + a.name);
 
     a.rollAbilitySave("con");
 
