@@ -47,7 +47,8 @@ export async function onIntoxSavingThrow(event) {
         data-saving-throw-dc=${intoxSaveDC}
     */
     console.log('Jorn | Intox Saving Throw Data: ' + this);
-    console.log('Jorn | Intox Saving Throw Data: ' + event);
+    console.log('Jorn | Intox Saving Throw Data: ');
+    console.log(event);
 
     let actorId = ($(this).data('actor-id'));
     let a = game.actors.get(actorId);
