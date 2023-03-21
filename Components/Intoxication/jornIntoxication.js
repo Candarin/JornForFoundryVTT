@@ -101,7 +101,7 @@ export async function onIntoxSavingThrow(event) {
         if (messageContent !== '') {
             let chatData = {
                 user: game.user?.id,
-                speaker: a,
+                speaker: ChatMessage.getSpeaker(a),
                 content: messageContent
             };
            
@@ -147,7 +147,7 @@ export async function onIntoxSavingThrow(event) {
         if (messageContent !== '') {
             let chatData = {
                 user: game.user?.id,
-                speaker: a,
+                speaker: ChatMessage.getSpeaker(a),
                 content: messageContent
             };
 
