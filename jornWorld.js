@@ -19,7 +19,7 @@ Hooks.once('init', () => {
 
     // Intoxication - Init settings and hook
     jornIntoxication.initSettings();
-    //jornIntoxication.initHooks();
+    jornIntoxication.initHooks();
 
 
 })
@@ -34,7 +34,7 @@ Hooks.once('ready', () => {
 
     // Intoxication - Init settings and hook
     //jornIntoxication.initSettings();
-    jornIntoxication.initHooks();
+    //jornIntoxication.initHooks();
 
 
 })
