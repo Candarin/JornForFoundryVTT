@@ -27,7 +27,7 @@ export default class jornIntoxication {
             // Add Intox Save function
             function _intoxChatListeners(html) {
                 console.log('Jorn | _intoxChatListeners fired');
-                html.on("click", '.jorn-drinking-savingthrow', onIntoxSavingThrow.bind(this))
+                html.on("click", '.jorn-drinking-savingthrow', onIntoxSavingThrow.bind(this));
             }
 
             Hooks.on("renderChatLog", (app, html, data) => _intoxChatListeners(html));
