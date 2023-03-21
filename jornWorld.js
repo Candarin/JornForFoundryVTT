@@ -1,5 +1,5 @@
-import {jornWepProp} from './Components/WepProp/jornWepProp.js'
-import { jornIntoxication } from './Components/Intoxication/jornIntoxication.js'
+import jornWepProp from './Components/WepProp/jornWepProp.js'
+import jornIntoxication from './Components/Intoxication/jornIntoxication.js'
 
 class jornWorld {
 
