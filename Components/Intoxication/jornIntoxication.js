@@ -118,7 +118,7 @@ export async function onIntoxSavingThrow(event) {
         // Failed
 
         // How much did they fail by
-        let saveDif = rollDC - rollresult;
+        let saveDif = rollDC - rollresult.total;
         switch (true) {
             case saveDif > 1 && saveDif <=5:            
                 actorIntoxLevelsToAdd = 1;
