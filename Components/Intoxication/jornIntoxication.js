@@ -51,12 +51,12 @@ export async function onIntoxSavingThrow(event) {
 
 
     console.log('Jorn | Intox Saving Throw Data: ');
-    console.log(event);
+    // console.log(event);
 
     let actorId = event.target.dataset.actorId;
     let rollDC = event.target.dataset.savingThrowDc;    
     let a = game.actors.get(actorId);
-    console.log('Jorn | actor: ' + actorId + ', ' + a.name);
+    console.log('Jorn | Intox Saving Throw Data: Actor:' + actorId + ', ' + a.name + ', Save DC: ' + rollDC);
 
     // Get Actor data
     // Check for current intox level flag
@@ -85,7 +85,7 @@ export async function onIntoxSavingThrow(event) {
 
     // Call for saving throw
     let rollResult = await a.rollAbilitySave("con");
-    console.log(rollResult);
+    //console.log(rollResult);
 
     // Compare Result to DC
     if (rollResult >= rollDC) {
@@ -93,7 +93,7 @@ export async function onIntoxSavingThrow(event) {
         // create message content
         let messageContent = `<div class='dnd5e chat-card item-card'>`
         messageContent += `<div class='card-content'>`
-        messageContent += `${token.actor.name} passes the save!`       
+        messageContent += `${a.name} passes the save!`       
         messageContent += `</div>`
         messageContent += `</div>`
 
@@ -139,7 +139,7 @@ export async function onIntoxSavingThrow(event) {
         // create message content
         let messageContent = `<div class='dnd5e chat-card item-card'>`
         messageContent += `<div class='card-content'>`
-        messageContent += `${token.actor.name} failed the save!`
+        messageContent += `${a.name} failed the save!`
         messageContent += `</div>`
         messageContent += `</div>`
 
