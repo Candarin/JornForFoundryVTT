@@ -31,10 +31,7 @@ export default class JornWepProp {
                 CONFIG.DND5E.weaponProperties['bro'] = 'Broken';
                 CONFIG.DND5E.weaponProperties['des'] = 'Destroyed';
                 // armor
-                CONFIG.DND5E.armorProperties['inf'] = 'Inferior Material';
-                CONFIG.DND5E.armorProperties['bro'] = 'Broken';
-                CONFIG.DND5E.armorProperties['des'] = 'Destroyed';
-                
+                // TODO need to find
 
             //});                      
 

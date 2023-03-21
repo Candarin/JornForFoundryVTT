@@ -1,7 +1,7 @@
-import JornWepProp from './Components/WepProp/jornwepprop.js'
-import jornIntoxication from './Components/Intoxication/jornIntoxication.js'
+import {jornWepProp} from './Components/WepProp/jornWepProp.js'
+import { jornIntoxication } from './Components/Intoxication/jornIntoxication.js'
 
-class JornWorld {
+class jornWorld {
 
 }
 
@@ -13,7 +13,7 @@ Hooks.once('init', () => {
     console.log('Jorn | Initializing Init Hooks and Settings');
 
     // Weapon Properties - Init settings and hook   
-    JornWepProp.initSettings();
+    jornWepProp.initSettings();
     //JornWepProp.initHooks();
  
 
@@ -29,7 +29,7 @@ Hooks.once('ready', () => {
 
     // Weapon Properties - Init settings and hook   
     //JornWepProp.initSettings();
-    JornWepProp.initHooks();
+    jornWepProp.initHooks();
 
 
     // Intoxication - Init settings and hook
