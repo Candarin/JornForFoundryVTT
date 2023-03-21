@@ -46,8 +46,14 @@ export async function onIntoxSavingThrow(event) {
         data-drink-strength=${selectedDrinkTypeStrength} 
         data-saving-throw-dc=${intoxSaveDC}
     */
+    // Constants
+    const intoxStates = [];
+    intoxStates.push("Sober", "Buzzed", "Jazzed", "Tipsy", "Drunk", "Shitfaced", "FUBAR");
+
     // Variables
     let actorCurrentIntoxLevel = 0;
+    let actorNewIntoxLevel = 0;
+    let actorIntoxLevelsToAdd = 0;
 
 
     console.log('Jorn | Intox Saving Throw Data: ');
@@ -85,10 +91,10 @@ export async function onIntoxSavingThrow(event) {
 
     // Call for saving throw
     let rollResult = await a.rollAbilitySave("con");
-    //console.log(rollResult);
+    console.log('Jorn | Saving Throw result: ' + rollResult.total);
 
     // Compare Result to DC
-    if (rollResult >= rollDC) {
+    if (rollResult.total >= rollDC) {
         // Passed
         // create message content
         let messageContent = `<div class='dnd5e chat-card item-card'>`
@@ -113,33 +119,43 @@ export async function onIntoxSavingThrow(event) {
 
         // How much did they fail by
         let saveDif = rollDC - rollresult;
-        switch (saveDif) {
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-                // code block
+        switch (true) {
+            case saveDif > 1 && saveDif <=5:            
+                actorIntoxLevelsToAdd = 1;
                 break;
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-                // code block
+            case saveDif >= 6 && saveDif <= 10:          
+                actorIntoxLevelsToAdd = 2;
                 break;
+            case saveDif >= 11 && saveDif <= 12:          
+                actorIntoxLevelsToAdd = 3;
+                break;
+            case saveDif >= 13:
+                actorIntoxLevelsToAdd = 4;
             default:
             // code block
         }
-        
+
+        // Get new intox level
+        actorNewIntoxLevel = actorCurrentIntoxLevel + actorIntoxLevelsToAdd;
+
+        //Check Intox Level hasn't shifted past the max
+        if (actorNewIntoxLevel > 6) { actorNewIntoxLevel = 6 }
 
         // Update actor
+        await a.setFlag('JornForFoundryVTT', 'currentIntoxLevel', actorNewIntoxLevel);
 
         // Apply effect
-
+            // Remove old effect
+            // Add new effect
+            // TODO
         
         // create message content
         let messageContent = `<div class='dnd5e chat-card item-card'>`
         messageContent += `<div class='card-content'>`
-        messageContent += `${a.name} failed the save!`
+        messageContent += `${a.name} failed the save by ${saveDif}!` 
+        messageContent += `<hr>`
+        messageContent += `<p>Intoxication Status:`
+        messageContent += `<p style="text-align: center; font-size: larger"><strong> ${intoxStates[actorCurrentIntoxLevel]} > ${intoxStates[actorNewIntoxLevel] } </strong></p>`
         messageContent += `</div>`
         messageContent += `</div>`
 
