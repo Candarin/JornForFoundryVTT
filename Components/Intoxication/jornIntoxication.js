@@ -220,7 +220,7 @@ export let readyHooksIntox = async () => {
                 if (messageContent !== '') {
                     let chatData = {
                         user: game.user?.id,
-                        speaker: ChatMessage.getSpeaker(a),
+                        speaker: ChatMessage.getSpeaker(actor),
                         content: messageContent
                     };
 
