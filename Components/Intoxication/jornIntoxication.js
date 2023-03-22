@@ -99,9 +99,9 @@ export default class jornIntoxication {
 
 export async function getActorIntoxValues(actorId) {
     // Vars
-    actorCurrentIntoxLevel = 0;
-    actorCurrentIntoxPoints = 0;
-    actorCurrentIntoxPointsMax = 0;
+    let actorCurrentIntoxLevel = 0;
+    let actorCurrentIntoxPoints = 0;
+    let actorCurrentIntoxPointsMax = 0;
 
     // Get actor
     let a = game.actors.get(actorId);
