@@ -28,8 +28,62 @@ export default class jornIntoxication {
                 html.on("click", '.jorn-drinking-savingthrow', onIntoxSavingThrow.bind(this))
             }
 
-            // Add Hook to capture when a ChatLog is created
+
+            // ------------ Add Hook to capture when a ChatLog is created
             Hooks.on("renderChatLog", (app, html, data) => _intoxChatListeners(html));
+
+
+
+            // ------------ Add hook to restore Intox points / levels when Rest occurs
+            Hooks.on("dnd5e.preRestCompleted", (actor, data) => {                
+                console.log('Jorn | Resting Actor: ' + actor);
+                console.log('Jorn | Resting data: ' + data);
+                // Vars
+                let needChatMessage = false;
+
+
+                // Get actor Intox data
+                let actorIntoxData = getActorIntoxValues(actor.id);
+                if (actorIntoxData === false) { return }  
+
+                // Determine if it was a Long or Short rest
+                if (data.longRest === true) {
+                    // Long Rest
+
+                    // Restore 50% of IntoxPoints
+                    // Determine if actor is using tertiary resource for 'Intoxication Points'
+                    if (actor.system.resources.tertiary.label === 'Intoxication Points') {
+                        let intoxPointsToRestore = parseInt(actorIntoxData / 2);
+                        console.log('Jorn | Intox Points to restore: ' + intoxPointsToRestore);
+
+                        if (actorIntoxData.actorCurrentIntoxPoints < actorIntoxData.currentIntoxPointsMax) {
+                            let intoxPointsNewTotal = actorIntoxData.actorCurrentIntoxPoints + intoxPointsToRestore;
+                            if (intoxPointsNewTotal > actorIntoxData.currentIntoxPointsMax) { intoxPointsNewTotal = actorIntoxData.currentIntoxPointsMax }
+                            console.log('Jorn | Intox Points new total: ' + intoxPointsNewTotal);
+
+                            // Update actor
+
+
+                            needChatMessage = true;
+                        }
+
+                        
+
+
+
+                    }
+
+
+                    // Reduce IntoxLevel by ??
+                    //actorIntoxData.currentIntoxLevel
+
+                } else {
+                    // Short Rest
+
+                    // TODO determine what we want to change
+                }
+              
+            });
 
             console.log('Jorn | Initialising Intoxication Hooks - Complete');
 
@@ -37,6 +91,57 @@ export default class jornIntoxication {
             console.log('Jorn | Initialising Intoxication Hooks - Skipped');
         }
     }   
+
+    static getActorIntoxValues(actorId) {
+        // Vars
+        actorCurrentIntoxLevel = 0;
+        actorCurrentIntoxPoints = 0;
+        actorCurrentIntoxPointsMax = 0;
+
+        // Get actor
+        let a = game.actors.get(actorId);
+        // Check that actor exists
+        if (typeof a === 'undefined') {
+            return false;
+        } else {    // Actor fouond
+            
+            // Get Intox Level
+            try {
+                let tempFlag = await a.getFlag('JornForFoundryVTT', 'currentIntoxLevel');
+
+                // validate value
+                if (typeof tempFlag === 'undefined') {
+                    // val is undefined, i.e. 0
+                    actorCurrentIntoxLevel = 0
+                    await a.setFlag('JornForFoundryVTT', 'currentIntoxLevel', 0);                    
+                } else {
+                    // val is ok
+                    actorCurrentIntoxLevel = tempFlag;                    
+                }
+            } catch (error) {
+                // flag doesn't exist
+
+                // Create flag if it doesn't exist
+                actorCurrentIntoxLevel = 0;
+                await a.setFlag('JornForFoundryVTT', 'currentIntoxLevel', 0);                
+            }
+
+            // Get Intox Points & Max            
+            actorCurrentIntoxPoints = a.system.resources.tertiary.value;
+            // check if it's undefined (happens when val is 0)
+            if (typeof actorCurrentIntoxPoints === 'undefined') { actorCurrentIntoxPoints = 0 }
+
+            actorCurrentIntoxPointMax = a.system.resources.tertiary.max;
+            if (typeof actorCurrentIntoxPointMax === 'undefined') { actorCurrentIntoxPointMax = 0 }
+
+            // Populate structure
+            const actorIntoxData = { currentIntoxLevel: actorCurrentIntoxLevel, currentIntoxPoints: actorCurrentIntoxPoints, currentIntoxPointsMax: actorCurrentIntoxPointMax };
+
+            // Return data
+            return actorIntoxData;
+        }
+        return false;
+    }
 }
 
 export async function onIntoxSavingThrow(event) {
@@ -170,5 +275,15 @@ export async function onIntoxSavingThrow(event) {
             ChatMessage.create(chatData, {});
         };
     }
+
+    // Blue Effect
+    // document.getElementById("board").style.filter = "blur(10px)"
+
+
+    /*
+    Hooks.on("dnd5e.preRestCompleted", (actor) => {
+        
+    });
+    */
 
 } 
