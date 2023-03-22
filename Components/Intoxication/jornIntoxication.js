@@ -274,7 +274,7 @@ export async function getActorIntoxValues(actorId) {
         // check if it's undefined (happens when val is 0)
         if (typeof actorCurrentIntoxPoints === 'undefined') { actorCurrentIntoxPoints = 0 }
 
-        actorCurrentIntoxPointMax = a.system.resources.tertiary.max;
+        actorCurrentIntoxPointsMax = a.system.resources.tertiary.max;
         if (typeof actorCurrentIntoxPointsMax === 'undefined') { actorCurrentIntoxPointsMax = 0 }
 
         // Populate structure
