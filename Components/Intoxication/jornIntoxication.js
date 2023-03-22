@@ -42,7 +42,10 @@ export default class jornIntoxication {
                 console.log(data);
                 // Vars
                 let needChatMessage = false;
-
+                let needToUpdateActor = false;
+                let intoxPointsNewTotal = 0;
+                let intoxPointsToRestore = 0;
+                let intoxLevelNew = 0;
 
                 // Get actor Intox data
                 let actorIntoxData = getActorIntoxValues(actor.id);
@@ -55,34 +58,59 @@ export default class jornIntoxication {
                     // Restore 50% of IntoxPoints
                     // Determine if actor is using tertiary resource for 'Intoxication Points'
                     if (actor.system.resources.tertiary.label === 'Intoxication Points') {
-                        let intoxPointsToRestore = parseInt(actorIntoxData / 2);
+                        intoxPointsToRestore = parseInt(actorIntoxData / 2);
                         console.log('Jorn | Intox Points to restore: ' + intoxPointsToRestore);
 
                         if (actorIntoxData.actorCurrentIntoxPoints < actorIntoxData.currentIntoxPointsMax) {
-                            let intoxPointsNewTotal = actorIntoxData.actorCurrentIntoxPoints + intoxPointsToRestore;
+                            intoxPointsNewTotal = actorIntoxData.actorCurrentIntoxPoints + intoxPointsToRestore;
                             if (intoxPointsNewTotal > actorIntoxData.currentIntoxPointsMax) { intoxPointsNewTotal = actorIntoxData.currentIntoxPointsMax }
                             console.log('Jorn | Intox Points new total: ' + intoxPointsNewTotal);
-
-                            // Update actor
-
-
+                           
+                            needToUpdateActor = true;
                             needChatMessage = true;
-                        }
-
-                        
-
-
-
+                        }                        
                     }
 
+                    if (actorIntoxData.actorCurrentIntoxLevel > 0) {
+                        // actor is not sober
+                        intoxLevelNew = actorIntoxData.actorCurrentIntoxLevel - 4;
+                        if (intoxLevelNew < 0) { intoxLevelNew=0 }
 
-                    // Reduce IntoxLevel by ??
-                    //actorIntoxData.currentIntoxLevel
-
+                        needToUpdateActor = true;
+                        needChatMessage = true;
+                    }
+                    
                 } else {
                     // Short Rest
 
                     // TODO determine what we want to change
+                }
+
+                // Update Actor
+                if (needToUpdateActor) { setActorIntoxValues(intoxLevelNew, intoxPointsNewTotal) }
+
+                // Create Chat Message
+                if (needChatMessage) {
+                    let messageContent = `<div class='dnd5e chat-card item-card'>`
+                    messageContent += `<div class='card-content'>`
+                    messageContent += `${a.name} is feeling less intoxicated after having a nice rest.`
+                    messageContent += `<hr>`
+                    messageContent += `Current Intoxication Points: ${intoxPointsNewTotal} of ${actorIntoxData.currentIntoxPointsMax}<br>`                   
+                    messageContent += `<p>Intoxication Status:`
+                    messageContent += `<p style="text-align: center; font-size: larger"><strong> ${intoxStates[actorIntoxData.actorCurrentIntoxLevel]} > ${intoxStates[intoxLevelNew]} </strong></p>`
+                    messageContent += `</div>`
+                    messageContent += `</div>`
+
+                    // create the message
+                    if (messageContent !== '') {
+                        let chatData = {
+                            user: game.user?.id,
+                            speaker: ChatMessage.getSpeaker(a),
+                            content: messageContent
+                        };
+
+                        ChatMessage.create(chatData, {});
+                    };
                 }
               
             });
@@ -137,15 +165,20 @@ export async function getActorIntoxValues(actorId) {
         if (typeof actorCurrentIntoxPoints === 'undefined') { actorCurrentIntoxPoints = 0 }
 
         actorCurrentIntoxPointMax = a.system.resources.tertiary.max;
-        if (typeof actorCurrentIntoxPointMax === 'undefined') { actorCurrentIntoxPointMax = 0 }
+        if (typeof actorCurrentIntoxPointsMax === 'undefined') { actorCurrentIntoxPointsMax = 0 }
 
         // Populate structure
-        const actorIntoxData = { currentIntoxLevel: actorCurrentIntoxLevel, currentIntoxPoints: actorCurrentIntoxPoints, currentIntoxPointsMax: actorCurrentIntoxPointMax };
+        const actorIntoxData = { currentIntoxLevel: actorCurrentIntoxLevel, currentIntoxPoints: actorCurrentIntoxPoints, currentIntoxPointsMax: actorCurrentIntoxPointsMax };
 
         // Return data
         return actorIntoxData;
     }
     return false;
+}
+
+export async function setActorIntoxValues(currentIntoxLevel, currentIntoxPoints) {    
+    await a.setFlag('JornForFoundryVTT', 'currentIntoxLevel', currentIntoxLevel);
+    await a.update({ 'system.resources.tertiary.value': currentIntoxPoints, });
 }
 
 export async function onIntoxSavingThrow(event) {
