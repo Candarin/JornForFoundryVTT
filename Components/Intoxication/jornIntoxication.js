@@ -49,7 +49,8 @@ export default class jornIntoxication {
 
                 // Get actor Intox data
                 let actorIntoxData = getActorIntoxValues(actor.id);
-                if (actorIntoxData === false) { return }  
+                if (actorIntoxData === false) { return }
+                consol.log('Jorn | Retrieved Intox values - Level: ' + actorIntoxData.currentIntoxLevel + ', Points: ' + actorIntoxData.currentIntoxPoints + 'Max: ' + actorIntoxData.currentIntoxPointsMax)
 
                 // Determine if it was a Long or Short rest
                 if (data.longRest === true) {
@@ -58,11 +59,12 @@ export default class jornIntoxication {
                     // Restore 50% of IntoxPoints
                     // Determine if actor is using tertiary resource for 'Intoxication Points'
                     if (actor.system.resources.tertiary.label === 'Intoxication Points') {
-                        intoxPointsToRestore = parseInt(actorIntoxData / 2);
+                        intoxPointsToRestore = parseInt(actorIntoxData.currentIntoxPointsMax / 2);
                         console.log('Jorn | Intox Points to restore: ' + intoxPointsToRestore);
 
-                        if (actorIntoxData.actorCurrentIntoxPoints < actorIntoxData.currentIntoxPointsMax) {
-                            intoxPointsNewTotal = actorIntoxData.actorCurrentIntoxPoints + intoxPointsToRestore;
+
+                        if (actorIntoxData.currentIntoxPoints < actorIntoxData.currentIntoxPointsMax) {
+                            intoxPointsNewTotal = actorIntoxData.currentIntoxPoints + intoxPointsToRestore;
                             if (intoxPointsNewTotal > actorIntoxData.currentIntoxPointsMax) { intoxPointsNewTotal = actorIntoxData.currentIntoxPointsMax }
                             console.log('Jorn | Intox Points new total: ' + intoxPointsNewTotal);
                            
