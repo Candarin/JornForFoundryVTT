@@ -37,7 +37,9 @@ export default class jornIntoxication {
             // ------------ Add hook to restore Intox points / levels when Rest occurs
             Hooks.on("dnd5e.preRestCompleted", (actor, data) => {                
                 console.log('Jorn | Resting Actor: ' + actor);
+                console.log(actor);
                 console.log('Jorn | Resting data: ' + data);
+                console.log(data);
                 // Vars
                 let needChatMessage = false;
 
