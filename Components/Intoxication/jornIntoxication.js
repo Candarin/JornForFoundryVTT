@@ -53,10 +53,14 @@ export default class jornIntoxication {
                 let intoxLevelNew = 0;
 
                 // Get actor Intox data
-                let actorIntoxData = getActorIntoxValues(actor.id);
+                //let actorIntoxData = getActorIntoxValues(actor.id);
+                actorIntoxData = await getActorIntoxValues(actor.id);
+                
+
                 if (actorIntoxData === false) { return }
                 console.log(actorIntoxData);
                 console.log('Jorn | Retrieved Intox values - Level: ' + actorIntoxData.currentIntoxLevel + ', Points: ' + actorIntoxData.currentIntoxPoints + 'Max: ' + actorIntoxData.currentIntoxPointsMax)
+
 
                 // Determine if it was a Long or Short rest
                 if (data.longRest === true) {
@@ -141,6 +145,7 @@ export async function getActorIntoxValues(actorId) {
 
     // Get actor
     let a = game.actors.get(actorId);
+    console.log('Jorn | Found Actor by id:')
     console.log(a);
     // Check that actor exists
     if (typeof a === 'undefined') {
@@ -154,7 +159,7 @@ export async function getActorIntoxValues(actorId) {
             // validate value
             if (typeof tempFlag === 'undefined') {
                 // val is undefined, i.e. 0
-                actorCurrentIntoxLevel = 0
+                actorCurrentIntoxLevel = 0;
                 await a.setFlag('JornForFoundryVTT', 'currentIntoxLevel', 0);
             } else {
                 // val is ok
@@ -182,6 +187,8 @@ export async function getActorIntoxValues(actorId) {
             currentIntoxPoints: actorCurrentIntoxPoints,
             currentIntoxPointsMax: actorCurrentIntoxPointsMax
         };
+
+        console.log('Jorn | Values found for actor: ' + actorCurrentIntoxLevel + ', ' + actorCurrentIntoxPoints + ', ' + actorCurrentIntoxPointsMax);
 
         // Return data
         return actorIntoxData;
