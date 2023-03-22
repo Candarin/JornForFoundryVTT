@@ -50,7 +50,7 @@ export default class jornIntoxication {
                 // Get actor Intox data
                 let actorIntoxData = getActorIntoxValues(actor.id);
                 if (actorIntoxData === false) { return }
-                consol.log('Jorn | Retrieved Intox values - Level: ' + actorIntoxData.currentIntoxLevel + ', Points: ' + actorIntoxData.currentIntoxPoints + 'Max: ' + actorIntoxData.currentIntoxPointsMax)
+                console.log('Jorn | Retrieved Intox values - Level: ' + actorIntoxData.currentIntoxLevel + ', Points: ' + actorIntoxData.currentIntoxPoints + 'Max: ' + actorIntoxData.currentIntoxPointsMax)
 
                 // Determine if it was a Long or Short rest
                 if (data.longRest === true) {
