@@ -1,5 +1,5 @@
 import jornWepProp from './Components/WepProp/jornWepProp.js'
-import { jornIntoxication, readyHooks } from './Components/Intoxication/jornIntoxication.js'
+import { registerSettingsIntox, initHooksIntox, readyHooksIntox } from './Components/Intoxication/jornIntoxication.js'
 
 
 /* ------------------------------------ */
@@ -15,8 +15,8 @@ Hooks.once('init', () => {
  
 
     // Intoxication - Init settings and hook
-    jornIntoxication.initSettings();
-    jornIntoxication.initHooks();
+    registerSettingsIntox();
+    initHooksIntox();
 
 
 })
@@ -39,7 +39,7 @@ Hooks.once('setup', function () {
 /* ------------------------------------ */
 
 Hooks.once('ready', async function () {
-    console.log('Jorn | Initializing Ready Hooks and Settings');
+    console.log('Jorn | Initializing Ready Hooks');
 
     // Weapon Properties - Init settings and hook   
     //JornWepProp.initSettings();
@@ -49,7 +49,7 @@ Hooks.once('ready', async function () {
     // Intoxication - Init settings and hook
     //jornIntoxication.initSettings();
     //jornIntoxication.initHooks();
-    readyHooks();
+    readyHooksIntox();
 
 
 })
