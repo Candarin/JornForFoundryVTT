@@ -35,7 +35,7 @@ export default class jornIntoxication {
 
 
             // ------------ Add hook to restore Intox points / levels when Rest occurs
-            Hooks.on("dnd5e.preRestCompleted", (actor, data) => {                
+            /*Hooks.on("dnd5e.preRestCompleted", (actor, data) => {                
                 console.log('Jorn | Resting Actor: ');
                 console.log(actor);
                 console.log('Jorn | Resting data: ');
@@ -125,7 +125,7 @@ export default class jornIntoxication {
                     };
                 }
               
-            });
+            });*/
 
             console.log('Jorn | Initialising Intoxication Hooks - Complete');
 
@@ -136,6 +136,107 @@ export default class jornIntoxication {
 
     
 }
+
+export let readyHooks = async () => {
+
+    // Check settings flag        
+    if (game.settings.get('JornForFoundryVTT', 'useintoxicationflags') === true) {
+        // ------------ Add hook to restore Intox points / levels when Rest occurs
+        Hooks.on("dnd5e.preRestCompleted", (actor, data) => {
+            console.log('Jorn | Resting Actor: ');
+            console.log(actor);
+            console.log('Jorn | Resting data: ');
+            console.log(data);
+
+            // Constants
+            const intoxStates = [];
+            intoxStates.push("Sober", "Buzzed", "Jazzed", "Tipsy", "Drunk", "Shitfaced", "FUBAR");
+
+            // Vars
+            let needChatMessage = false;
+            let needToUpdateActor = false;
+            let intoxPointsNewTotal = 0;
+            let intoxPointsToRestore = 0;
+            let intoxLevelNew = 0;
+
+            // Get actor Intox data
+            //let actorIntoxData = getActorIntoxValues(actor.id);
+            actorIntoxData = await getActorIntoxValues(actor.id);
+
+
+            if (actorIntoxData === false) { return }
+            console.log(actorIntoxData);
+            console.log('Jorn | Retrieved Intox values - Level: ' + actorIntoxData.currentIntoxLevel + ', Points: ' + actorIntoxData.currentIntoxPoints + 'Max: ' + actorIntoxData.currentIntoxPointsMax)
+
+
+            // Determine if it was a Long or Short rest
+            if (data.longRest === true) {
+                // Long Rest
+
+                // Restore 50% of IntoxPoints
+                // Determine if actor is using tertiary resource for 'Intoxication Points'
+                if (actor.system.resources.tertiary.label === 'Intoxication Points') {
+                    intoxPointsToRestore = parseInt(actorIntoxData.currentIntoxPointsMax / 2);
+                    console.log('Jorn | Intox Points to restore: ' + intoxPointsToRestore);
+
+
+                    if (actorIntoxData.currentIntoxPoints < actorIntoxData.currentIntoxPointsMax) {
+                        intoxPointsNewTotal = actorIntoxData.currentIntoxPoints + intoxPointsToRestore;
+                        if (intoxPointsNewTotal > actorIntoxData.currentIntoxPointsMax) { intoxPointsNewTotal = actorIntoxData.currentIntoxPointsMax }
+                        console.log('Jorn | Intox Points new total: ' + intoxPointsNewTotal);
+
+                        needToUpdateActor = true;
+                        needChatMessage = true;
+                    }
+                }
+
+                if (actorIntoxData.currentIntoxLevel > 0) {
+                    // actor is not sober
+                    intoxLevelNew = actorIntoxData.actorCurrentIntoxLevel - 4;
+                    if (intoxLevelNew < 0) { intoxLevelNew = 0 }
+
+                    needToUpdateActor = true;
+                    needChatMessage = true;
+                }
+
+            } else {
+                // Short Rest
+
+                // TODO determine what we want to change
+            }
+
+            // Update Actor
+            if (needToUpdateActor) { setActorIntoxValues(intoxLevelNew, intoxPointsNewTotal) }
+
+            // Create Chat Message
+            if (needChatMessage) {
+                let messageContent = `<div class='dnd5e chat-card item-card'>`
+                messageContent += `<div class='card-content'>`
+                messageContent += `${a.name} is feeling less intoxicated after having a nice rest.`
+                messageContent += `<hr>`
+                messageContent += `Current Intoxication Points: ${intoxPointsNewTotal} of ${actorIntoxData.currentIntoxPointsMax}<br>`
+                messageContent += `<p>Intoxication Status:`
+                messageContent += `<p style="text-align: center; font-size: larger"><strong> ${intoxStates[actorIntoxData.actorCurrentIntoxLevel]} > ${intoxStates[intoxLevelNew]} </strong></p>`
+                messageContent += `</div>`
+                messageContent += `</div>`
+
+                // create the message
+                if (messageContent !== '') {
+                    let chatData = {
+                        user: game.user?.id,
+                        speaker: ChatMessage.getSpeaker(a),
+                        content: messageContent
+                    };
+
+                    ChatMessage.create(chatData, {});
+                };
+            }
+
+        });
+
+    }
+}
+
 
 export async function getActorIntoxValues(actorId) {
     // Vars
@@ -344,3 +445,6 @@ export async function onIntoxSavingThrow(event) {
     */
 
 } 
+
+
+

@@ -1,9 +1,6 @@
 import jornWepProp from './Components/WepProp/jornWepProp.js'
-import jornIntoxication from './Components/Intoxication/jornIntoxication.js'
+import { jornIntoxication, readyHooks } from './Components/Intoxication/jornIntoxication.js'
 
-class jornWorld {
-
-}
 
 /* ------------------------------------ */
 /* Initialize module					*/
@@ -35,6 +32,7 @@ Hooks.once('ready', () => {
     // Intoxication - Init settings and hook
     //jornIntoxication.initSettings();
     //jornIntoxication.initHooks();
+    readyHooks();
 
 
 })
