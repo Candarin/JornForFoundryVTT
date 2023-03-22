@@ -157,7 +157,7 @@ export let readyHooksIntox = async () => {
 
             // Get actor Intox data
             //let actorIntoxData = getActorIntoxValues(actor.id);
-            actorIntoxData = await getActorIntoxValues(actor.id);
+            const actorIntoxData = await getActorIntoxValues(actor.id);
 
 
             if (actorIntoxData === false) { return }
