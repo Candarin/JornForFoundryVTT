@@ -107,7 +107,7 @@ export default class jornIntoxication {
             
             // Get Intox Level
             try {
-                let tempFlag = await a.getFlag('JornForFoundryVTT', 'currentIntoxLevel');
+                tempFlag = await a.getFlag('JornForFoundryVTT', 'currentIntoxLevel');
 
                 // validate value
                 if (typeof tempFlag === 'undefined') {
