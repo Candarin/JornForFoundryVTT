@@ -92,7 +92,7 @@ export default class jornIntoxication {
         }
     }   
 
-    static getActorIntoxValues(actorId) {
+    static async getActorIntoxValues(actorId) {
         // Vars
         actorCurrentIntoxLevel = 0;
         actorCurrentIntoxPoints = 0;
