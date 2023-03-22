@@ -202,7 +202,7 @@ export let readyHooksIntox = async () => {
             }
 
             // Update Actor
-            if (needToUpdateActor) { setActorIntoxValues(intoxLevelNew, intoxPointsNewTotal) }
+            if (needToUpdateActor) { await setActorIntoxValues(actor, intoxLevelNew, intoxPointsNewTotal) }
 
             // Create Chat Message
             if (needChatMessage) {
@@ -292,9 +292,9 @@ export async function getActorIntoxValues(actorId) {
     return false;
 }
 
-export async function setActorIntoxValues(currentIntoxLevel, currentIntoxPoints) {    
-    await a.setFlag('JornForFoundryVTT', 'currentIntoxLevel', currentIntoxLevel);
-    await a.update({ 'system.resources.tertiary.value': currentIntoxPoints, });
+export async function setActorIntoxValues(actor, currentIntoxLevel, currentIntoxPoints) {    
+    await actor.setFlag('JornForFoundryVTT', 'currentIntoxLevel', currentIntoxLevel);
+    await actor.update({ 'system.resources.tertiary.value': currentIntoxPoints, });
 }
 
 export async function onIntoxSavingThrow(event) {
