@@ -21,7 +21,24 @@ Hooks.once('init', () => {
 
 })
 
-Hooks.once('ready', () => {
+
+
+/* ------------------------------------ */
+/* Setup module							*/
+/* ------------------------------------ */
+
+Hooks.once('setup', function () {
+
+
+})
+
+
+
+/* ------------------------------------ */
+/* Ready    							*/
+/* ------------------------------------ */
+
+Hooks.once('ready', async function () {
     console.log('Jorn | Initializing Ready Hooks and Settings');
 
     // Weapon Properties - Init settings and hook   
