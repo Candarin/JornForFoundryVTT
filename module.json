@@ -9,7 +9,7 @@
       "email": "candarinfall@gmail.com"
     }
   ],
-  "version": "0.0.50",
+  "version": "0.0.51",
   "compatibility": {
     "minimum": "10.286",
     "verified": "10.291",
@@ -30,6 +30,6 @@
        
   "url": "https://github.com/Candarin/JornForFoundryVTT",
   "manifest": "https://raw.githubusercontent.com/Candarin/JornForFoundryVTT/main/module.json",
-  "download": "https://github.com/Candarin/JornForFoundryVTT/archive/v0.0.50.zip",
+  "download": "https://github.com/Candarin/JornForFoundryVTT/archive/v0.0.51.zip",
   "readme": "https://raw.githubusercontent.com/Candarin/JornForFoundryVTT/main/README.md"
 }

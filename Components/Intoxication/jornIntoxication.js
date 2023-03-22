@@ -142,7 +142,7 @@ export let readyHooks = async () => {
     // Check settings flag        
     if (game.settings.get('JornForFoundryVTT', 'useintoxicationflags') === true) {
         // ------------ Add hook to restore Intox points / levels when Rest occurs
-        Hooks.on("dnd5e.preRestCompleted", (actor, data) => {
+        Hooks.on("dnd5e.preRestCompleted", async (actor, data) => {
             console.log('Jorn | Resting Actor: ');
             console.log(actor);
             console.log('Jorn | Resting data: ');
