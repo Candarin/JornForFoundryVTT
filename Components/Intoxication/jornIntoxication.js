@@ -36,9 +36,9 @@ export default class jornIntoxication {
 
             // ------------ Add hook to restore Intox points / levels when Rest occurs
             Hooks.on("dnd5e.preRestCompleted", (actor, data) => {                
-                console.log('Jorn | Resting Actor: ' + actor);
+                console.log('Jorn | Resting Actor: ');
                 console.log(actor);
-                console.log('Jorn | Resting data: ' + data);
+                console.log('Jorn | Resting data: ');
                 console.log(data);
                 // Vars
                 let needChatMessage = false;
@@ -94,56 +94,58 @@ export default class jornIntoxication {
         }
     }   
 
-    static async getActorIntoxValues(actorId) {
-        // Vars
-        actorCurrentIntoxLevel = 0;
-        actorCurrentIntoxPoints = 0;
-        actorCurrentIntoxPointsMax = 0;
+    
+}
 
-        // Get actor
-        let a = game.actors.get(actorId);
-        // Check that actor exists
-        if (typeof a === 'undefined') {
-            return false;
-        } else {    // Actor fouond
-            
-            // Get Intox Level
-            try {
-                tempFlag = await a.getFlag('JornForFoundryVTT', 'currentIntoxLevel');
+export async function getActorIntoxValues(actorId) {
+    // Vars
+    actorCurrentIntoxLevel = 0;
+    actorCurrentIntoxPoints = 0;
+    actorCurrentIntoxPointsMax = 0;
 
-                // validate value
-                if (typeof tempFlag === 'undefined') {
-                    // val is undefined, i.e. 0
-                    actorCurrentIntoxLevel = 0
-                    await a.setFlag('JornForFoundryVTT', 'currentIntoxLevel', 0);                    
-                } else {
-                    // val is ok
-                    actorCurrentIntoxLevel = tempFlag;                    
-                }
-            } catch (error) {
-                // flag doesn't exist
-
-                // Create flag if it doesn't exist
-                actorCurrentIntoxLevel = 0;
-                await a.setFlag('JornForFoundryVTT', 'currentIntoxLevel', 0);                
-            }
-
-            // Get Intox Points & Max            
-            actorCurrentIntoxPoints = a.system.resources.tertiary.value;
-            // check if it's undefined (happens when val is 0)
-            if (typeof actorCurrentIntoxPoints === 'undefined') { actorCurrentIntoxPoints = 0 }
-
-            actorCurrentIntoxPointMax = a.system.resources.tertiary.max;
-            if (typeof actorCurrentIntoxPointMax === 'undefined') { actorCurrentIntoxPointMax = 0 }
-
-            // Populate structure
-            const actorIntoxData = { currentIntoxLevel: actorCurrentIntoxLevel, currentIntoxPoints: actorCurrentIntoxPoints, currentIntoxPointsMax: actorCurrentIntoxPointMax };
-
-            // Return data
-            return actorIntoxData;
-        }
+    // Get actor
+    let a = game.actors.get(actorId);
+    // Check that actor exists
+    if (typeof a === 'undefined') {
         return false;
+    } else {    // Actor fouond
+
+        // Get Intox Level
+        try {
+            tempFlag = await a.getFlag('JornForFoundryVTT', 'currentIntoxLevel');
+
+            // validate value
+            if (typeof tempFlag === 'undefined') {
+                // val is undefined, i.e. 0
+                actorCurrentIntoxLevel = 0
+                await a.setFlag('JornForFoundryVTT', 'currentIntoxLevel', 0);
+            } else {
+                // val is ok
+                actorCurrentIntoxLevel = tempFlag;
+            }
+        } catch (error) {
+            // flag doesn't exist
+
+            // Create flag if it doesn't exist
+            actorCurrentIntoxLevel = 0;
+            await a.setFlag('JornForFoundryVTT', 'currentIntoxLevel', 0);
+        }
+
+        // Get Intox Points & Max            
+        actorCurrentIntoxPoints = a.system.resources.tertiary.value;
+        // check if it's undefined (happens when val is 0)
+        if (typeof actorCurrentIntoxPoints === 'undefined') { actorCurrentIntoxPoints = 0 }
+
+        actorCurrentIntoxPointMax = a.system.resources.tertiary.max;
+        if (typeof actorCurrentIntoxPointMax === 'undefined') { actorCurrentIntoxPointMax = 0 }
+
+        // Populate structure
+        const actorIntoxData = { currentIntoxLevel: actorCurrentIntoxLevel, currentIntoxPoints: actorCurrentIntoxPoints, currentIntoxPointsMax: actorCurrentIntoxPointMax };
+
+        // Return data
+        return actorIntoxData;
     }
+    return false;
 }
 
 export async function onIntoxSavingThrow(event) {
