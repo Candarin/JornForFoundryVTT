@@ -208,7 +208,7 @@ export let readyHooksIntox = async () => {
             if (needChatMessage) {
                 let messageContent = `<div class='dnd5e chat-card item-card'>`
                 messageContent += `<div class='card-content'>`
-                messageContent += `${a.name} is feeling less intoxicated after having a nice rest.`
+                messageContent += `${actor.name} is feeling less intoxicated after having a nice rest.`
                 messageContent += `<hr>`
                 messageContent += `Current Intoxication Points: ${intoxPointsNewTotal} of ${actorIntoxData.currentIntoxPointsMax}<br>`
                 messageContent += `<p>Intoxication Status:`
@@ -253,7 +253,7 @@ export async function getActorIntoxValues(actorId) {
             tempFlag = await a.getFlag('JornForFoundryVTT', 'currentIntoxLevel');
 
             // validate value
-            if (typeof tempFlag === 'undefined') {
+            if (typeof tempFlag === 'undefined' || !tempFlag) {
                 // val is undefined, i.e. 0
                 actorCurrentIntoxLevel = 0;
                 await a.setFlag('JornForFoundryVTT', 'currentIntoxLevel', 0);
@@ -272,10 +272,10 @@ export async function getActorIntoxValues(actorId) {
         // Get Intox Points & Max            
         actorCurrentIntoxPoints = a.system.resources.tertiary.value;
         // check if it's undefined (happens when val is 0)
-        if (typeof actorCurrentIntoxPoints === 'undefined') { actorCurrentIntoxPoints = 0 }
+        if (typeof actorCurrentIntoxPoints === 'undefined' || !actorCurrentIntoxPoints) { actorCurrentIntoxPoints = 0 }
 
         actorCurrentIntoxPointsMax = a.system.resources.tertiary.max;
-        if (typeof actorCurrentIntoxPointsMax === 'undefined') { actorCurrentIntoxPointsMax = 0 }
+        if (typeof actorCurrentIntoxPointsMax === 'undefined' || !actorCurrentIntoxPointsMax) { actorCurrentIntoxPointsMax = 0 }
 
         // Populate structure
         const actorIntoxData = {
