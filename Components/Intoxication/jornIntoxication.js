@@ -40,6 +40,11 @@ export default class jornIntoxication {
                 console.log(actor);
                 console.log('Jorn | Resting data: ');
                 console.log(data);
+
+                // Constants
+                const intoxStates = [];
+                intoxStates.push("Sober", "Buzzed", "Jazzed", "Tipsy", "Drunk", "Shitfaced", "FUBAR");
+
                 // Vars
                 let needChatMessage = false;
                 let needToUpdateActor = false;
@@ -50,6 +55,7 @@ export default class jornIntoxication {
                 // Get actor Intox data
                 let actorIntoxData = getActorIntoxValues(actor.id);
                 if (actorIntoxData === false) { return }
+                console.log(actorIntoxData);
                 console.log('Jorn | Retrieved Intox values - Level: ' + actorIntoxData.currentIntoxLevel + ', Points: ' + actorIntoxData.currentIntoxPoints + 'Max: ' + actorIntoxData.currentIntoxPointsMax)
 
                 // Determine if it was a Long or Short rest
@@ -73,7 +79,7 @@ export default class jornIntoxication {
                         }                        
                     }
 
-                    if (actorIntoxData.actorCurrentIntoxLevel > 0) {
+                    if (actorIntoxData.currentIntoxLevel > 0) {
                         // actor is not sober
                         intoxLevelNew = actorIntoxData.actorCurrentIntoxLevel - 4;
                         if (intoxLevelNew < 0) { intoxLevelNew=0 }
@@ -135,6 +141,7 @@ export async function getActorIntoxValues(actorId) {
 
     // Get actor
     let a = game.actors.get(actorId);
+    console.log(a);
     // Check that actor exists
     if (typeof a === 'undefined') {
         return false;
@@ -170,7 +177,11 @@ export async function getActorIntoxValues(actorId) {
         if (typeof actorCurrentIntoxPointsMax === 'undefined') { actorCurrentIntoxPointsMax = 0 }
 
         // Populate structure
-        const actorIntoxData = { currentIntoxLevel: actorCurrentIntoxLevel, currentIntoxPoints: actorCurrentIntoxPoints, currentIntoxPointsMax: actorCurrentIntoxPointsMax };
+        const actorIntoxData = {
+            currentIntoxLevel: actorCurrentIntoxLevel,
+            currentIntoxPoints: actorCurrentIntoxPoints,
+            currentIntoxPointsMax: actorCurrentIntoxPointsMax
+        };
 
         // Return data
         return actorIntoxData;
