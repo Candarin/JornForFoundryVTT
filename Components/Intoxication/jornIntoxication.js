@@ -1,5 +1,5 @@
 import { debouncedReload, rootStyle } from '../utils.js';
-import { intoxStates } from '../Constants/jornConstants.js';
+import { intoxStates } from '../Components/Constants/jornConstants.js';
 
 
 
@@ -52,8 +52,8 @@ export let readyHooksIntox = async () => {
             console.log(data);
 
             // Constants
-            //const intoxStates = [];
-            //intoxStates.push("Sober", "Buzzed", "Jazzed", "Tipsy", "Drunk", "Shitfaced", "FUBAR");
+            const intoxStates = [];
+            intoxStates.push("Sober", "Buzzed", "Jazzed", "Tipsy", "Drunk", "Shitfaced", "FUBAR");
 
             // Vars
             let needChatMessage = false;
@@ -212,8 +212,8 @@ export async function onIntoxSavingThrow(event) {
         data-saving-throw-dc=${intoxSaveDC}
     */
     // Constants
-    //const intoxStates = [];
-    //intoxStates.push("Sober", "Buzzed", "Jazzed", "Tipsy", "Drunk", "Shitfaced", "FUBAR");
+    const intoxStates = [];
+    intoxStates.push("Sober", "Buzzed", "Jazzed", "Tipsy", "Drunk", "Shitfaced", "FUBAR");
 
     // Variables
     let actorCurrentIntoxLevel = 0;
