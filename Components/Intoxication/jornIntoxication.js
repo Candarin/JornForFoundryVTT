@@ -212,7 +212,7 @@ export let readyHooksIntox = async () => {
                 messageContent += `<hr>`
                 messageContent += `Current Intoxication Points: ${intoxPointsNewTotal} of ${actorIntoxData.currentIntoxPointsMax}<br>`
                 messageContent += `<p>Intoxication Status:`
-                messageContent += `<p style="text-align: center; font-size: larger"><strong> ${intoxStates[actorIntoxData.actorCurrentIntoxLevel]} > ${intoxStates[intoxLevelNew]} </strong></p>`
+                messageContent += `<p style="text-align: center; font-size: larger"><strong> ${intoxStates[actorIntoxData.currentIntoxLevel]} > ${intoxStates[intoxLevelNew]} </strong></p>`
                 messageContent += `</div>`
                 messageContent += `</div>`
 
