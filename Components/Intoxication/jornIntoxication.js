@@ -1,5 +1,5 @@
 import { debouncedReload, rootStyle } from '../utils.js';
-import { intoxStates } from '../Components/Constants/jornConstants.js';
+import { intoxStates } from '../Constants/jornConstants.js';
 
 
 
