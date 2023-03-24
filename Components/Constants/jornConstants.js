@@ -1,5 +1,5 @@
 
-const intoxStates = ["Sober", "Buzzed", "Jazzed", "Tipsy", "Drunk", "Shitfaced", "FUBAR"];
+export const intoxStates = ["Sober", "Buzzed", "Jazzed", "Tipsy", "Drunk", "Shitfaced", "FUBAR"];
 
 
 /* Example to use for ActiveEffects
