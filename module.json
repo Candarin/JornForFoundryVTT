@@ -9,14 +9,23 @@
       "email": "candarinfall@gmail.com"
     }
   ],
-  "version": "0.0.65",
+  "version": "0.0.66",
   "compatibility": {
     "minimum": "10.286",
     "verified": "11.313",
     "maximum": "11"
   },
-  "minimumCoreVersion": "10",  
-  
+  "minimumCoreVersion": "10",
+  "packs": [
+    {
+      "name": "Jorn: Food and Drinks",
+      "label": "Jorn: Food and Drinks",
+      "path": "packs/foodanddrink.db",
+      "type": "Item",
+      "module": "JornForFoundryVTT",
+      "system": "dnd5e"
+    }
+  ],
   "esmodules": [
     "jornWorld.js"
   ],
@@ -30,6 +39,6 @@
        
   "url": "https://github.com/Candarin/JornForFoundryVTT",
   "manifest": "https://raw.githubusercontent.com/Candarin/JornForFoundryVTT/main/module.json",
-  "download": "https://github.com/Candarin/JornForFoundryVTT/archive/v0.0.65.zip",
+  "download": "https://github.com/Candarin/JornForFoundryVTT/archive/v0.0.66.zip",
   "readme": "https://raw.githubusercontent.com/Candarin/JornForFoundryVTT/main/README.md"
 }
