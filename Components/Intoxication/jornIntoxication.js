@@ -351,7 +351,7 @@ export async function onIntoxSavingThrow(event) {
 /*
 
 */
-async function jornDrinkingHorn(actor, item, drinkStrength) {
+export async function jornDrinkingHorn(actor, item, drinkStrength) {
     console.log('Jorn | Drinking Horn Lifted');
 
     // Set these for the specific drink
