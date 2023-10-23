@@ -354,7 +354,7 @@ export async function onIntoxSavingThrow(event) {
 
 export class jornIntox {
 
-    static async jornDrinkingHorn(actor, item, drinkStrength) {
+    static async jornDrinkingHorn(token, item, drinkStrength) {
         console.log('Jorn | Drinking Horn Lifted');
 
         // Set these for the specific drink
@@ -373,7 +373,7 @@ export class jornIntox {
         // intoxStates.push("Sober", "Buzzed", "Jazzed", "Tipsy", "Drunk", "Shitfaced", "FUBAR");
         //console.log(intoxStates.length);
 
-        let a = actor;
+        let a = token.actor;
         // TODO test that actor is valid
         // console.log(a);
 
