@@ -52,8 +52,8 @@ export let readyHooksIntox = async () => {
             console.log(data);
 
             // Constants
-            const intoxStates = [];
-            intoxStates.push("Sober", "Buzzed", "Jazzed", "Tipsy", "Drunk", "Shitfaced", "FUBAR");
+            // const intoxStates = [];
+            // intoxStates.push("Sober", "Buzzed", "Jazzed", "Tipsy", "Drunk", "Shitfaced", "FUBAR");
 
             // Vars
             let needChatMessage = false;
@@ -212,8 +212,8 @@ export async function onIntoxSavingThrow(event) {
         data-saving-throw-dc=${intoxSaveDC}
     */
     // Constants
-    const intoxStates = [];
-    intoxStates.push("Sober", "Buzzed", "Jazzed", "Tipsy", "Drunk", "Shitfaced", "FUBAR");
+    // const intoxStates = [];
+    // intoxStates.push("Sober", "Buzzed", "Jazzed", "Tipsy", "Drunk", "Shitfaced", "FUBAR");
 
     // Variables
     let actorCurrentIntoxLevel = 0;
@@ -225,7 +225,7 @@ export async function onIntoxSavingThrow(event) {
     // console.log(event);
 
     let actorId = event.target.dataset.actorId;
-    let rollDC = event.target.dataset.savingThrowDc;    
+    let rollDC = event.target.dataset.savingThrowDc;
     let a = game.actors.get(actorId);
     console.log('Jorn | Intox Saving Throw Data: Actor:' + actorId + ', ' + a.name + ', Save DC: ' + rollDC);
 
@@ -265,7 +265,7 @@ export async function onIntoxSavingThrow(event) {
         // create message content
         let messageContent = `<div class='dnd5e chat-card item-card'>`
         messageContent += `<div class='card-content'>`
-        messageContent += `${a.name} passes the save!`       
+        messageContent += `${a.name} passes the save!`
         messageContent += `</div>`
         messageContent += `</div>`
 
@@ -276,7 +276,7 @@ export async function onIntoxSavingThrow(event) {
                 speaker: ChatMessage.getSpeaker(a),
                 content: messageContent
             };
-           
+
             ChatMessage.create(chatData, {});
         };
 
@@ -285,14 +285,14 @@ export async function onIntoxSavingThrow(event) {
 
         // How much did they fail by
         let saveDif = rollDC - rollResult.total;
-        switch (true) {                        
-            case saveDif >= 1 && saveDif <=5:            
+        switch (true) {
+            case saveDif >= 1 && saveDif <= 5:
                 actorIntoxLevelsToAdd = 1;
                 break;
-            case saveDif >= 6 && saveDif <= 10:          
+            case saveDif >= 6 && saveDif <= 10:
                 actorIntoxLevelsToAdd = 2;
                 break;
-            case saveDif >= 11 && saveDif <= 12:          
+            case saveDif >= 11 && saveDif <= 12:
                 actorIntoxLevelsToAdd = 3;
                 break;
             case saveDif >= 13:
@@ -311,17 +311,17 @@ export async function onIntoxSavingThrow(event) {
         await a.setFlag('JornForFoundryVTT', 'currentIntoxLevel', actorNewIntoxLevel);
 
         // Apply effect
-            // Remove old effect
-            // Add new effect
-            // TODO
-        
+        // Remove old effect
+        // Add new effect
+        // TODO
+
         // create message content
         let messageContent = `<div class='dnd5e chat-card item-card'>`
         messageContent += `<div class='card-content'>`
-        messageContent += `${a.name} failed the save by ${saveDif}!` 
+        messageContent += `${a.name} failed the save by ${saveDif}!`
         messageContent += `<hr>`
         messageContent += `<p>Intoxication Status:`
-        messageContent += `<p style="text-align: center; font-size: larger"><strong> ${intoxStates[actorCurrentIntoxLevel]} > ${intoxStates[actorNewIntoxLevel] } </strong></p>`
+        messageContent += `<p style="text-align: center; font-size: larger"><strong> ${intoxStates[actorCurrentIntoxLevel]} > ${intoxStates[actorNewIntoxLevel]} </strong></p>`
         messageContent += `</div>`
         messageContent += `</div>`
 
@@ -337,7 +337,7 @@ export async function onIntoxSavingThrow(event) {
         };
     }
 
-    // Blue Effect
+    // Blur Effect
     // document.getElementById("board").style.filter = "blur(10px)"
 
 
@@ -346,8 +346,180 @@ export async function onIntoxSavingThrow(event) {
         
     });
     */
+}
 
-} 
+/*
+
+*/
+async function jornDrinkingHorn(actor, item, drinkStrength) {
+    console.log('Jorn | Drinking Horn Lifted');
+
+    // Set these for the specific drink
+    let selectedDrinkType = item.name;
+    let selectedDrinkTypeStrength = drinkStrength;
+
+    let actorHasIntoxPoints = true;
+    let actorCurrentIntoxPoints = 0;
+    let actorMoreThanHalfPointsRemain = true;
+    let actorCurrentIntoxLevel = 0;
+    let actorNeedsToSave = false;
+    let intoxSaveDC = 0;
+
+        // Set up states
+    // const intoxStates = [];
+    // intoxStates.push("Sober", "Buzzed", "Jazzed", "Tipsy", "Drunk", "Shitfaced", "FUBAR");
+    //console.log(intoxStates.length);
+
+    let a = actor;
+    // TODO test that actor is valid
+    // console.log(a);
+
+
+    // check for item quantity
+    if (item.system.quantity <= 0) {
+        let dialog = new Promise((resolve, reject) => {
+            new Dialog({
+                title: 'Your drink is empty',
+                content: `
+            <form class="flexcol">
+            <div class="form-group">
+                <p>You lift your cup to your mouth and find that it is empty. 
+                </p>
+            </div>
+            </form>
+        `,
+                //select element type
+                buttons: {
+                    close: {
+                        label: 'Close',
+                    },
+                }
+            }).render(true);
+        })
+        await dialog;
+
+        // exit function
+        return;
+    }
+
+    // reduce quantity of item    
+    await item.update({ 'system.quantity': item.system.quantity - 1, });
+
+    // Check for current intox level flag
+    try {
+        tempFlag = await a.getFlag('JornForFoundryVTT', 'currentIntoxLevel');
+
+        // validate value
+        if (typeof tempFlag === 'undefined') {
+            // val is null
+            actorCurrentIntoxLevel = 0
+            await a.setFlag('JornForFoundryVTT', 'currentIntoxLevel', 0);
+            console.log('Jorn | actorCurrentIntoxLevel (created flag): ' + actorCurrentIntoxLevel);
+        } else {
+            // val is ok
+            actorCurrentIntoxLevel = tempFlag;
+            console.log('Jorn | actorCurrentIntoxLevel (found flag): ' + actorCurrentIntoxLevel);
+        }
+    } catch (error) {
+        // flag doesn't exist
+
+        // Create flag if it doesn't exist
+        actorCurrentIntoxLevel = 0;
+        await a.setFlag('JornForFoundryVTT', 'currentIntoxLevel', 0);
+        console.log('Jorn | actorCurrentIntoxLevel (error, created flag): ' + actorCurrentIntoxLevel);
+    }
+
+    console.log('Jorn | Intox Flag: ' + await a.getFlag('JornForFoundryVTT', 'currentIntoxLevel'));
+
+
+    // Subtract drink value from current Intoxication Points
+    console.log('Jorn | Tertiary Value: ' + a.system.resources.tertiary.value);
+
+    // get current resource value
+    let currentTertiaryValue = a.system.resources.tertiary.value;
+    // check if it's undefined (happens when val is 0)
+    if (typeof currentTertiaryValue === 'undefined') { currentTertiaryValue = 0 }
+    // subract drink strength
+    actorCurrentIntoxPoints = currentTertiaryValue - Number(selectedDrinkTypeStrength);
+    // correct if it would make it < 0
+    if (actorCurrentIntoxPoints < 0) { actorCurrentIntoxPoints = 0 };
+
+    console.log('Jorn | Proposed actorCurrentIntoxPoints: ' + actorCurrentIntoxPoints);
+    await a.update({ 'system.resources.tertiary.value': actorCurrentIntoxPoints, });
+
+    // Check if points is > 0
+    if (token.actor.system.resources.tertiary.value > 0) {
+        actorHasIntoxPoints = true;
+    } else {
+        actorHasIntoxPoints = false;
+    }
+
+    // Check if points < half
+    if (a.system.resources.tertiary.max / 2 > actorCurrentIntoxPoints) { actorMoreThanHalfPointsRemain = false }
+
+    // Check if a save is needed
+    if ((selectedDrinkTypeStrength > 0 && actorMoreThanHalfPointsRemain === false) || selectedDrinkTypeStrength > 3) {
+        actorNeedsToSave = true;
+
+        // Generate save DC
+        let baseSaveDC = 8;
+        intoxSaveDC = baseSaveDC + actorCurrentIntoxLevel + Number(selectedDrinkTypeStrength);
+    }
+
+
+    // Generate message  
+    let messageContent = `<div class='dnd5e chat-card item-card'>`
+    messageContent += `<div class='card-content'>`
+    messageContent += `${token.actor.name} takes a drink!`
+    messageContent += `<p style="text-align: center; font-size: larger"><strong> ${selectedDrinkType} [${selectedDrinkTypeStrength}]</strong></p>`
+    messageContent += `${item.system.description.value}`
+    messageContent += `<hr>`
+    messageContent += `Current Intoxication Points: ${actorCurrentIntoxPoints} of ${token.actor.system.resources.tertiary.max}<br>`
+    messageContent += `Current Intoxication Status: ${intoxStates[actorCurrentIntoxLevel]}`
+    messageContent += `<hr>`
+    messageContent += (actorNeedsToSave ? `${token.actor.name} needs to make a saving throw!` : `${token.actor.name} doesn't need to make a saving throw.`)
+    messageContent += `<hr></div>`
+    messageContent += `<div class='card-buttons'>`
+    messageContent += (actorNeedsToSave ? `<button class='jorn-drinking-savingthrow' data-actor-id=${actor.id} data-drink-strength=${selectedDrinkTypeStrength} data-saving-throw-dc=${intoxSaveDC}> Constituion Saving Throw DC ${intoxSaveDC} </button>` : '')
+    messageContent += `</div>`
+    messageContent += `</div>`
+
+    // messageContent += resultText
+
+
+    // check table function
+    function checkTable(table) {
+        let results = 0;
+        for (let data of table.data.results) {
+            if (!data.drawn) {
+                results++;
+            }
+        }
+        if (results < 1) {
+            table.reset();
+            ui.notifications.notify("Table Reset")
+            return false
+        }
+        console.log("checkTable: Return True");
+        return true
+    }
+
+
+    // create the message
+    if (messageContent !== '') {
+        let chatData = {
+            user: game.user._id,
+            speaker: ChatMessage.getSpeaker(),
+            content: messageContent
+        };
+
+        ChatMessage.create(chatData, {});
+    };
+
+}
+   
+
+
 
 
 
