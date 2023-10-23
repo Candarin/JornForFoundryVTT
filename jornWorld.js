@@ -48,6 +48,15 @@ Hooks.once('ready', async function () {
     readyHooksIntox();
 
     // expose Intox functions
-    game.modules.get("Jorn for Foundry VTT").api = jornIntox;
+    try {
+        game.modules.get('JornForFoundryVTT').api = jornIntox;
+        t = game.modules.get('JornForFoundryVTT')?.active;
+        console.log('Jorn | Registered Intox API - success ' + t);
+    }
+    catch {
+        t = game.modules.get('JornForFoundryVTT')?.active;
+        console.log('Jorn | Registered Intox API - failed ' + t);
+    }
+   
 
 })
