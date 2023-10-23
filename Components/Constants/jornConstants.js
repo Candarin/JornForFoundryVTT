@@ -1,5 +1,6 @@
 
 export const intoxStates = ["Sober", "Buzzed", "Jazzed", "Tipsy", "Drunk", "Shitfaced", "FUBAR"];
+export const JornModuleName = "Jorn For Foundry VTT";
 
 
 /* Example to use for ActiveEffects

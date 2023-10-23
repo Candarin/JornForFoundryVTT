@@ -137,9 +137,7 @@ export let readyHooksIntox = async () => {
 
         });
 
-    }
-
-    window.jornIntox = jornIntoxConst;
+    }    
 }
 
 export async function getActorIntoxValues(actorId) {
@@ -354,9 +352,9 @@ export async function onIntoxSavingThrow(event) {
 
 */
 
-export function jornIntox() {
+export class jornIntox {
 
-    async function jornDrinkingHorn(actor, item, drinkStrength) {
+    static async jornDrinkingHorn(actor, item, drinkStrength) {
         console.log('Jorn | Drinking Horn Lifted');
 
         // Set these for the specific drink
@@ -524,7 +522,6 @@ export function jornIntox() {
     }
 }   
 
-export const jornIntoxConst = jornIntox();
 
 
 
