@@ -483,7 +483,7 @@ export class jornIntox {
         messageContent += (actorNeedsToSave ? `${token.actor.name} needs to make a saving throw!` : `${token.actor.name} doesn't need to make a saving throw.`)
         messageContent += `<hr></div>`
         messageContent += `<div class='card-buttons'>`
-        messageContent += (actorNeedsToSave ? `<button class='jorn-drinking-savingthrow' data-actor-id=${actor.id} data-drink-strength=${selectedDrinkTypeStrength} data-saving-throw-dc=${intoxSaveDC}> Constituion Saving Throw DC ${intoxSaveDC} </button>` : '')
+        messageContent += (actorNeedsToSave ? `<button class='jorn-drinking-savingthrow' data-actor-id=${token.actor.id} data-drink-strength=${selectedDrinkTypeStrength} data-saving-throw-dc=${intoxSaveDC}> Constituion Saving Throw DC ${intoxSaveDC} </button>` : '')
         messageContent += `</div>`
         messageContent += `</div>`
 
