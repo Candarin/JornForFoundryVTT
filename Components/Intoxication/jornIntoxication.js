@@ -308,18 +308,28 @@ export async function onIntoxSavingThrow(event) {
         await a.setFlag('JornForFoundryVTT', 'currentIntoxLevel', actorNewIntoxLevel);
 
         // Apply effect
-        // Remove old effect(s)        
-        let effects = Array.from(a.getEmbeddedCollection("ActiveEffect").contents)
+        // Remove old effect(s)
+        /*let effects = Array.from(a.allApplicableEffects());
         for (let i = 0; i < effects.length; i++) {
             for (let j = 1; j < jornIntoxEffectData.length; j++) {
-                if (effects[i].data.label === jornIntoxEffectData[j].label) {
-                    await this.actor.deleteEmbeddedDocuments('ActiveEffect', [effects[i].id])
+                if (effects[i].data.name === jornIntoxEffectData[j].name) {
+                    // await a.deleteEmbeddedDocuments('ActiveEffect', [effects[i].id])
+                    effects[i].update({ disabled: true });
+                }
+            }
+        }*/
+
+        // Disable intox effects
+        for (const effects of actor.allApplicableEffects()) {
+            for (let j = 1; j < jornIntoxEffectData.length; j++) {
+                if (effects[i].data.name === jornIntoxEffectData[j].name) {
+                    effects[i].update({ disabled: true });
                 }
             }
         }
 
         // apply effect
-        await a.createEmbeddedDocument("ActiveEffect", jornIntoxEffectData[1]);
+        await a.createEmbeddedDocuments("ActiveEffect", jornIntoxEffectData[1]);
         
 
         // create message content
