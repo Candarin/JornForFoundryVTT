@@ -330,8 +330,8 @@ export async function onIntoxSavingThrow(event) {
         }
 
         // apply effect
-        await a.createEmbeddedDocuments("ActiveEffect", jornIntoxEffectData[actorNewIntoxLevel]);
-        
+        // await a.createEmbeddedDocuments("ActiveEffect", jornIntoxEffectData[actorNewIntoxLevel]);
+        await ActiveEffect.implementation.create(jornIntoxEffectData[actorNewIntoxLevel], { parent: a });
 
         // create message content
         let messageContent = `<div class='dnd5e chat-card item-card'>`
@@ -388,7 +388,7 @@ export class jornIntox {
 
         let a = token.actor;
         // TODO test that actor is valid
-        // console.log(a);
+        console.log(a);
 
 
         // check for item quantity
@@ -438,6 +438,7 @@ export class jornIntox {
             }
         } catch (error) {
             // flag doesn't exist
+            console.log('Jorn | Cannot fetch flag.' + error);
 
             // Create flag if it doesn't exist
             actorCurrentIntoxLevel = 0;
