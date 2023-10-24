@@ -308,10 +308,18 @@ export async function onIntoxSavingThrow(event) {
         await a.setFlag('JornForFoundryVTT', 'currentIntoxLevel', actorNewIntoxLevel);
 
         // Apply effect
-        // Remove old effect        
+        // Remove old effect(s)        
+        let effects = Array.from(a.getEmbeddedCollection("ActiveEffect").contents)
+        for (let i = 0; i < effects.length; i++) {
+            for (let j = 1; j < jornIntoxEffectData.length; j++) {
+                if (effects[i].data.label === jornIntoxEffectData[j].label) {
+                    await this.actor.deleteEmbeddedDocuments('ActiveEffect', [effects[i].id])
+                }
+            }
+        }
 
         // apply effect
-        await a.createEmbeddedEntity("ActiveEffect", jornIntoxEffectData[1]);
+        await a.createEmbeddedDocument("ActiveEffect", jornIntoxEffectData[1]);
         
 
         // create message content
