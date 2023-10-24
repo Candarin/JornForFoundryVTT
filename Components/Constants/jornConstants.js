@@ -6,7 +6,7 @@ export const jornIntoxEffectData = [
     {
     label: 'Buzzed',
     icon: 'icons/consumables/drinks/alcohol-beer-stein-wooden-brown.webp',
-    origin: a.uuid,
+    origin: '',
     disabled: false,
     
     flags: { dae: { macroRepeat: 'none', showIcon: true } },
@@ -21,7 +21,7 @@ export const jornIntoxEffectData = [
     {
         label: 'Jazzed',
         icon: 'icons/consumables/drinks/alcohol-beer-stein-wooden-brown.webp',
-        origin: a.uuid,
+        origin: '',
         disabled: false,
        
         flags: { dae: { macroRepeat: 'none', showIcon: true } },
