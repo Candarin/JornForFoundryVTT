@@ -216,6 +216,7 @@ export async function onIntoxSavingThrow(event) {
     let actorCurrentIntoxLevel = 0;
     let actorNewIntoxLevel = 0;
     let actorIntoxLevelsToAdd = 0;
+    let intoxSaveDisadvantage = true;
 
 
     console.log('Jorn | Intox Saving Throw Data: ');
@@ -229,7 +230,7 @@ export async function onIntoxSavingThrow(event) {
     // Get Actor data
     // Check for current intox level flag
     try {
-        tempFlag = await a.getFlag('JornForFoundryVTT', 'currentIntoxLevel');
+        var tempFlag = await a.getFlag('JornForFoundryVTT', 'currentIntoxLevel');
 
         // validate value
         if (typeof tempFlag === 'undefined') {
@@ -251,9 +252,19 @@ export async function onIntoxSavingThrow(event) {
         console.log('Jorn | actorCurrentIntoxLevel (error, created flag): ' + actorCurrentIntoxLevel);
     }
 
+    // Check if Disadvantage needs to be applied
+    if (a.system.resources.tertiary.max / 2 > a.system.resources.tertiary.value) {        
+        intoxSaveDisadvantage = false;
+    }
+
     // Call for saving throw
-    // ("con", {advantage: true})
-    let rollResult = await a.rollAbilitySave("con");
+    // ("con", {advantage: true})    
+    if (intoxSaveDisadvantage) {
+        var rollResult = await a.rollAbilitySave("con", {disadvantage: true});
+    }
+    else {
+        var rollResult = await a.rollAbilitySave("con");
+    }   
     console.log('Jorn | Saving Throw result: ' + rollResult.total);
 
     // Compare Result to DC
@@ -307,31 +318,24 @@ export async function onIntoxSavingThrow(event) {
         // Update actor
         await a.setFlag('JornForFoundryVTT', 'currentIntoxLevel', actorNewIntoxLevel);
 
-        // Apply effect
-        // Remove old effect(s)
-        /*let effects = Array.from(a.allApplicableEffects());
-        for (let i = 0; i < effects.length; i++) {
-            for (let j = 1; j < jornIntoxEffectData.length; j++) {
-                if (effects[i].data.name === jornIntoxEffectData[j].name) {
-                    // await a.deleteEmbeddedDocuments('ActiveEffect', [effects[i].id])
-                    effects[i].update({ disabled: true });
-                }
-            }
-        }*/
-
         // Disable intox effects
         let effects = Array.from(a.allApplicableEffects());
+        let effectFound = false;
         for (let i = 0; i < effects.length; i++) {
             for (let j = 1; j < jornIntoxEffectData.length; j++) {
-                if (effects[i].data.name === jornIntoxEffectData[j].name) {
+                if (effects[i].data.name === jornIntoxEffectData[actorNewIntoxLevel].name) {
+                    // Enable correct effect if it is found
+                    effects[i].update({ disabled: false });
+                    effectFound = true;
+                }
+                elseif (effects[i].data.name === jornIntoxEffectData[j].name) {
                     effects[i].update({ disabled: true });
                 }
             }
         }
 
-        // apply effect
-        // await a.createEmbeddedDocuments("ActiveEffect", jornIntoxEffectData[actorNewIntoxLevel]);
-        await ActiveEffect.implementation.create(jornIntoxEffectData[actorNewIntoxLevel], { parent: a });
+        // create effect if it is not found        
+        if (!effectFound) { await ActiveEffect.implementation.create(jornIntoxEffectData[actorNewIntoxLevel], { parent: a }) }
 
         // create message content
         let messageContent = `<div class='dnd5e chat-card item-card'>`
@@ -384,7 +388,8 @@ export class jornIntox {
         let actorMoreThanHalfPointsRemain = true;
         let actorCurrentIntoxLevel = 0;
         let actorNeedsToSave = false;
-        let intoxSaveDC = 0;      
+        let intoxSaveDC = 0;  
+        let intoxSaveDisadvantage = true;
 
         let a = token.actor;
         // TODO test that actor is valid
@@ -472,7 +477,10 @@ export class jornIntox {
         }
 
         // Check if points < half
-        if (a.system.resources.tertiary.max / 2 > actorCurrentIntoxPoints) { actorMoreThanHalfPointsRemain = false }
+        if (a.system.resources.tertiary.max / 2 > actorCurrentIntoxPoints) {
+            actorMoreThanHalfPointsRemain = false;
+            intoxSaveDisadvantage = false;
+        }
 
         // Check if a save is needed
         if ((selectedDrinkTypeStrength > 0 && actorMoreThanHalfPointsRemain === false) || selectedDrinkTypeStrength > 3) {
@@ -494,10 +502,10 @@ export class jornIntox {
         messageContent += `Current Intoxication Points: ${actorCurrentIntoxPoints} of ${token.actor.system.resources.tertiary.max}<br>`
         messageContent += `Current Intoxication Status: ${intoxStates[actorCurrentIntoxLevel]}`
         messageContent += `<hr>`
-        messageContent += (actorNeedsToSave ? `${token.actor.name} needs to make a saving throw!` : `${token.actor.name} doesn't need to make a saving throw.`)
+        messageContent += (actorNeedsToSave ? `${token.actor.name} needs to make a saving throw`(intoxSaveDisadvantage ? ` at Disadvantage!` : `!`) : `${token.actor.name} doesn't need to make a saving throw.`)
         messageContent += `<hr></div>`
         messageContent += `<div class='card-buttons'>`
-        messageContent += (actorNeedsToSave ? `<button class='jorn-drinking-savingthrow' data-actor-id=${token.actor.id} data-drink-strength=${selectedDrinkTypeStrength} data-saving-throw-dc=${intoxSaveDC}> Constituion Saving Throw DC ${intoxSaveDC} </button>` : '')
+        messageContent += (actorNeedsToSave ? `<button class='jorn-drinking-savingthrow' data-actor-id=${token.actor.id} data-drink-strength=${selectedDrinkTypeStrength} data-saving-throw-dc=${intoxSaveDC}> Constitution Saving Throw DC ${intoxSaveDC} </button>` : '')
         messageContent += `</div>`
         messageContent += `</div>`
 
