@@ -5,7 +5,7 @@ export const JornModuleName = "Jorn For Foundry VTT";
 export const jornIntoxEffectData = [
     {
         name: 'Sober',
-        img: 'icons/consumables/drinks/alcohol-beer-stein-wooden-brown.webp',
+        img: '',
         origin: '',
         disabled: false,
 
@@ -20,7 +20,7 @@ export const jornIntoxEffectData = [
 
     {
         name: 'Buzzed',
-        img: 'icons/consumables/drinks/alcohol-beer-stein-wooden-brown.webp',
+        img: '../../icons/drink_ale1.png',
         origin: '',
         disabled: false,
     
@@ -36,7 +36,7 @@ export const jornIntoxEffectData = [
     {
         name: 'Jazzed',
         img: 'icons/consumables/drinks/alcohol-beer-stein-wooden-brown.webp',
-        origin: '',
+        origin: '../icons/drink_ale1.png',
         disabled: false,
        
         flags: { dae: { macroRepeat: 'none', showIcon: true } },
@@ -50,7 +50,7 @@ export const jornIntoxEffectData = [
 
     {
         name: 'Tipsy',
-        img: 'icons/consumables/drinks/alcohol-beer-stein-wooden-brown.webp',
+        img: 'icons/drink_ale1.png',
         origin: '',
         disabled: false,
 
@@ -65,7 +65,7 @@ export const jornIntoxEffectData = [
 
     {
         name: 'Drunk',
-        img: 'icons/consumables/drinks/alcohol-beer-stein-wooden-brown.webp',
+        img: '/icons/drink_ale1.png',
         origin: '',
         disabled: false,
 
@@ -80,7 +80,7 @@ export const jornIntoxEffectData = [
 
     {
         name: 'Shitfaced',
-        img: 'icons/consumables/drinks/alcohol-beer-stein-wooden-brown.webp',
+        img: '../../../icons/drink_ale1.png',
         origin: '',
         disabled: false,
 
@@ -95,7 +95,7 @@ export const jornIntoxEffectData = [
 
     {
         name: 'FUBAR',
-        img: 'icons/consumables/drinks/alcohol-beer-stein-wooden-brown.webp',
+        img: 'icons/drink_ale1.png',
         origin: '',
         disabled: false,
 

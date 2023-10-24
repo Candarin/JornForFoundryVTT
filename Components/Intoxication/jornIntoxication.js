@@ -323,13 +323,14 @@ export async function onIntoxSavingThrow(event) {
         let effects = Array.from(a.allApplicableEffects());
         let effectFound = false;
         for (let i = 0; i < effects.length; i++) {
-            for (let j = 1; j < jornIntoxEffectData.length; j++) {
-                if (effects[i].data.name === jornIntoxEffectData[actorNewIntoxLevel].name) {
+            console.log(effects[i]);
+            for (let j = 1; j < jornIntoxEffectData.length; j++) {                
+                if (effects[i].name === jornIntoxEffectData[actorNewIntoxLevel].name) {
                     // Enable correct effect if it is found
                     effects[i].update({ disabled: false });
                     effectFound = true;
                 }
-                else if (effects[i].data.name === jornIntoxEffectData[j].name)
+                else if (effects[i].name === jornIntoxEffectData[j].name)
                 {
                     effects[i].update({ disabled: true })
                 }
