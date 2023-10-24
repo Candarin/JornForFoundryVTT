@@ -4,12 +4,12 @@ export const JornModuleName = "Jorn For Foundry VTT";
 
 export const jornIntoxEffectData = [
     {
-    label: "Buzzed",
+    label: 'Buzzed',
     icon: 'icons/consumables/drinks/alcohol-beer-stein-wooden-brown.webp',
     origin: a.uuid,
     disabled: false,
     duration: { startRound: gameRound },
-    flags: { dae: { macroRepeat: "none", specialDuration: [mqExpire], showIcon: true } },
+    flags: { dae: { macroRepeat: 'none', specialDuration: [mqExpire], showIcon: true } },
     changes: [{
         key: 'flags.midi-qol.advantage.ability.check.cha',
         value: '',
@@ -19,12 +19,12 @@ export const jornIntoxEffectData = [
     },
 
     {
-        label: "Jazzed",
+        label: 'Jazzed',
         icon: 'icons/consumables/drinks/alcohol-beer-stein-wooden-brown.webp',
         origin: a.uuid,
         disabled: false,
         duration: { startRound: gameRound },
-        flags: { dae: { macroRepeat: "none", specialDuration: [mqExpire], showIcon: true } },
+        flags: { dae: { macroRepeat: 'none', specialDuration: [mqExpire], showIcon: true } },
         changes: [{
             key: 'flags.midi-qol.advantage.ability.check.cha',
             value: '',

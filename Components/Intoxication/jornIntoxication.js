@@ -308,27 +308,10 @@ export async function onIntoxSavingThrow(event) {
         await a.setFlag('JornForFoundryVTT', 'currentIntoxLevel', actorNewIntoxLevel);
 
         // Apply effect
-        // Remove old effect
-
-
-        // Add new effect
-        let effectData = {
-            label: "Buzzed",
-            icon: 'icons/consumables/drinks/alcohol-beer-stein-wooden-brown.webp',
-            origin: a.uuid,
-            disabled: false,
-            duration: { startRound: gameRound },
-            flags: { dae: { macroRepeat: "none", specialDuration: [mqExpire], showIcon: true } },
-            changes: [{
-                key: 'flags.midi-qol.advantage.ability.check.cha',
-                value: '',
-                mode: 2,
-                priority: 20
-            }]
-        };
+        // Remove old effect        
 
         // apply effect
-        await a.createEmbeddedEntity("ActiveEffect", effectData);
+        await a.createEmbeddedEntity("ActiveEffect", jornIntoxEffectData[1]);
         
 
         // create message content
@@ -531,6 +514,8 @@ export class jornIntox {
         };
 
     }
+
+
 }   
 
 
