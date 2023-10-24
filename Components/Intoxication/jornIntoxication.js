@@ -423,7 +423,7 @@ export class jornIntox {
 
         // Check for current intox level flag
         try {
-            tempFlag = await a.getFlag('JornForFoundryVTT', 'currentIntoxLevel');
+            let tempFlag = await a.getFlag('JornForFoundryVTT', 'currentIntoxLevel');
 
             // validate value
             if (typeof tempFlag === 'undefined') {
