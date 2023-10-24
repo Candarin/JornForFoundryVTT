@@ -49,13 +49,11 @@ Hooks.once('ready', async function () {
 
     // expose Intox functions
     try {
-        game.modules.get('JornForFoundryVTT').api = jornIntox;
-        t = game.modules.get('JornForFoundryVTT')?.active;
-        console.log('Jorn | Registered Intox API - success ' + t);
+        game.modules.get('JornForFoundryVTT').api = jornIntox;     
+        console.log('Jorn | Registered Intox API - success');
     }
-    catch {
-        t = game.modules.get('JornForFoundryVTT')?.active;
-        console.log('Jorn | Registered Intox API - failed ' + t);
+    catch {        
+        console.log('Jorn | Registered Intox API - failed');
     }
    
 

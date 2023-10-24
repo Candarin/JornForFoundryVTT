@@ -8,8 +8,8 @@ export const jornIntoxEffectData = [
     icon: 'icons/consumables/drinks/alcohol-beer-stein-wooden-brown.webp',
     origin: a.uuid,
     disabled: false,
-    duration: { startRound: gameRound },
-    flags: { dae: { macroRepeat: 'none', specialDuration: [mqExpire], showIcon: true } },
+    
+    flags: { dae: { macroRepeat: 'none', showIcon: true } },
     changes: [{
         key: 'flags.midi-qol.advantage.ability.check.cha',
         value: '',
@@ -23,8 +23,8 @@ export const jornIntoxEffectData = [
         icon: 'icons/consumables/drinks/alcohol-beer-stein-wooden-brown.webp',
         origin: a.uuid,
         disabled: false,
-        duration: { startRound: gameRound },
-        flags: { dae: { macroRepeat: 'none', specialDuration: [mqExpire], showIcon: true } },
+       
+        flags: { dae: { macroRepeat: 'none', showIcon: true } },
         changes: [{
             key: 'flags.midi-qol.advantage.ability.check.cha',
             value: '',
@@ -34,6 +34,7 @@ export const jornIntoxEffectData = [
     }
 ];
 
+// duration: { startRound: gameRound },
 
 /* Example to use for ActiveEffects
 const noteControls = [
