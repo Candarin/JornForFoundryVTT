@@ -259,11 +259,12 @@ export async function onIntoxSavingThrow(event) {
 
     // Call for saving throw
     // ("con", {advantage: true})    
+    var rollResult = 0;
     if (intoxSaveDisadvantage) {
-        var rollResult = await a.rollAbilitySave("con", {disadvantage: true});
+        rollResult = await a.rollAbilitySave("con", {disadvantage: true})
     }
     else {
-        var rollResult = await a.rollAbilitySave("con");
+        rollResult = await a.rollAbilitySave("con")
     }   
     console.log('Jorn | Saving Throw result: ' + rollResult.total);
 
@@ -328,8 +329,9 @@ export async function onIntoxSavingThrow(event) {
                     effects[i].update({ disabled: false });
                     effectFound = true;
                 }
-                elseif (effects[i].data.name === jornIntoxEffectData[j].name) {
-                    effects[i].update({ disabled: true });
+                elseif (effects[i].data.name === jornIntoxEffectData[j].name)
+                {
+                    effects[i].update({ disabled: true })
                 }
             }
         }
