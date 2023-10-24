@@ -1,5 +1,5 @@
 import { debouncedReload, rootStyle } from '../utils.js';
-import { intoxStates } from '../Constants/jornConstants.js';
+import { intoxStates, jornIntoxEffectData } from '../Constants/jornConstants.js';
 
 
 
@@ -211,9 +211,6 @@ export async function onIntoxSavingThrow(event) {
         data-drink-strength=${selectedDrinkTypeStrength} 
         data-saving-throw-dc=${intoxSaveDC}
     */
-    // Constants
-    // const intoxStates = [];
-    // intoxStates.push("Sober", "Buzzed", "Jazzed", "Tipsy", "Drunk", "Shitfaced", "FUBAR");
 
     // Variables
     let actorCurrentIntoxLevel = 0;
@@ -312,8 +309,27 @@ export async function onIntoxSavingThrow(event) {
 
         // Apply effect
         // Remove old effect
+
+
         // Add new effect
-        // TODO
+        let effectData = {
+            label: "Buzzed",
+            icon: 'icons/consumables/drinks/alcohol-beer-stein-wooden-brown.webp',
+            origin: a.uuid,
+            disabled: false,
+            duration: { startRound: gameRound },
+            flags: { dae: { macroRepeat: "none", specialDuration: [mqExpire], showIcon: true } },
+            changes: [{
+                key: 'flags.midi-qol.advantage.ability.check.cha',
+                value: '',
+                mode: 2,
+                priority: 20
+            }]
+        };
+
+        // apply effect
+        await a.createEmbeddedEntity("ActiveEffect", effectData);
+        
 
         // create message content
         let messageContent = `<div class='dnd5e chat-card item-card'>`
@@ -366,12 +382,7 @@ export class jornIntox {
         let actorMoreThanHalfPointsRemain = true;
         let actorCurrentIntoxLevel = 0;
         let actorNeedsToSave = false;
-        let intoxSaveDC = 0;
-
-        // Set up states
-        // const intoxStates = [];
-        // intoxStates.push("Sober", "Buzzed", "Jazzed", "Tipsy", "Drunk", "Shitfaced", "FUBAR");
-        //console.log(intoxStates.length);
+        let intoxSaveDC = 0;      
 
         let a = token.actor;
         // TODO test that actor is valid
