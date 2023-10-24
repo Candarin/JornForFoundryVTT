@@ -31,7 +31,68 @@ export const jornIntoxEffectData = [
             mode: 2,
             priority: 20
         }]
+    },
+
+    {
+        name: 'Tipsy',
+        img: 'icons/consumables/drinks/alcohol-beer-stein-wooden-brown.webp',
+        origin: '',
+        disabled: false,
+
+        flags: { dae: { macroRepeat: 'none', showIcon: true } },
+        changes: [{
+            key: 'flags.midi-qol.advantage.ability.check.cha',
+            value: '',
+            mode: 2,
+            priority: 20
+        }]
+    },
+
+    {
+        name: 'Drunk',
+        img: 'icons/consumables/drinks/alcohol-beer-stein-wooden-brown.webp',
+        origin: '',
+        disabled: false,
+
+        flags: { dae: { macroRepeat: 'none', showIcon: true } },
+        changes: [{
+            key: 'flags.midi-qol.advantage.ability.check.cha',
+            value: '',
+            mode: 2,
+            priority: 20
+        }]
+    },
+
+    {
+        name: 'Shitfaced',
+        img: 'icons/consumables/drinks/alcohol-beer-stein-wooden-brown.webp',
+        origin: '',
+        disabled: false,
+
+        flags: { dae: { macroRepeat: 'none', showIcon: true } },
+        changes: [{
+            key: 'flags.midi-qol.advantage.ability.check.cha',
+            value: '',
+            mode: 2,
+            priority: 20
+        }]
+    },
+
+    {
+        name: 'FUBAR',
+        img: 'icons/consumables/drinks/alcohol-beer-stein-wooden-brown.webp',
+        origin: '',
+        disabled: false,
+
+        flags: { dae: { macroRepeat: 'none', showIcon: true } },
+        changes: [{
+            key: 'flags.midi-qol.advantage.ability.check.cha',
+            value: '',
+            mode: 2,
+            priority: 20
+        }]
     }
+
 ];
 
 // duration: { startRound: gameRound },

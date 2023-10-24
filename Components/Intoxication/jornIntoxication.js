@@ -320,7 +320,7 @@ export async function onIntoxSavingThrow(event) {
         }*/
 
         // Disable intox effects
-        for (const effects of actor.allApplicableEffects()) {
+        for (const effects of a.allApplicableEffects()) {
             for (let j = 1; j < jornIntoxEffectData.length; j++) {
                 if (effects[i].data.name === jornIntoxEffectData[j].name) {
                     effects[i].update({ disabled: true });
