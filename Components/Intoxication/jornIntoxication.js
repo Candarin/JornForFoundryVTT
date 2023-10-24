@@ -329,7 +329,7 @@ export async function onIntoxSavingThrow(event) {
                     effects[i].update({ disabled: false });
                     effectFound = true;
                 }
-                elseif (effects[i].data.name === jornIntoxEffectData[j].name)
+                else if (effects[i].data.name === jornIntoxEffectData[j].name)
                 {
                     effects[i].update({ disabled: true })
                 }
@@ -493,6 +493,7 @@ export class jornIntox {
             intoxSaveDC = baseSaveDC + actorCurrentIntoxLevel + Number(selectedDrinkTypeStrength);
         }
 
+        let disadvantageMessage = (intoxSaveDisadvantage ? ` at Disadvantage!` : `!`);
 
         // Generate message  
         let messageContent = `<div class='dnd5e chat-card item-card'>`
@@ -504,7 +505,7 @@ export class jornIntox {
         messageContent += `Current Intoxication Points: ${actorCurrentIntoxPoints} of ${token.actor.system.resources.tertiary.max}<br>`
         messageContent += `Current Intoxication Status: ${intoxStates[actorCurrentIntoxLevel]}`
         messageContent += `<hr>`
-        messageContent += (actorNeedsToSave ? `${token.actor.name} needs to make a saving throw`(intoxSaveDisadvantage ? ` at Disadvantage!` : `!`) : `${token.actor.name} doesn't need to make a saving throw.`)
+        messageContent += (actorNeedsToSave ? `${token.actor.name} needs to make a saving throw` + disadvantageMessage : `${token.actor.name} doesn't need to make a saving throw.`)
         messageContent += `<hr></div>`
         messageContent += `<div class='card-buttons'>`
         messageContent += (actorNeedsToSave ? `<button class='jorn-drinking-savingthrow' data-actor-id=${token.actor.id} data-drink-strength=${selectedDrinkTypeStrength} data-saving-throw-dc=${intoxSaveDC}> Constitution Saving Throw DC ${intoxSaveDC} </button>` : '')
