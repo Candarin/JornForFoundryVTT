@@ -320,7 +320,8 @@ export async function onIntoxSavingThrow(event) {
         }*/
 
         // Disable intox effects
-        for (const effects of a.allApplicableEffects()) {
+        let effects = Array.from(a.allApplicableEffects());
+        for (let i = 0; i < effects.length; i++) {
             for (let j = 1; j < jornIntoxEffectData.length; j++) {
                 if (effects[i].data.name === jornIntoxEffectData[j].name) {
                     effects[i].update({ disabled: true });
@@ -329,7 +330,7 @@ export async function onIntoxSavingThrow(event) {
         }
 
         // apply effect
-        await a.createEmbeddedDocuments("ActiveEffect", jornIntoxEffectData[1]);
+        await a.createEmbeddedDocuments("ActiveEffect", jornIntoxEffectData[actorNewIntoxLevel]);
         
 
         // create message content

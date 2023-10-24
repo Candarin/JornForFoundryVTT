@@ -4,6 +4,21 @@ export const JornModuleName = "Jorn For Foundry VTT";
 
 export const jornIntoxEffectData = [
     {
+        name: 'Sober',
+        img: 'icons/consumables/drinks/alcohol-beer-stein-wooden-brown.webp',
+        origin: '',
+        disabled: false,
+
+        flags: { dae: { macroRepeat: 'none', showIcon: true } },
+        changes: [{
+            key: 'flags.midi-qol.advantage.ability.check.cha',
+            value: '',
+            mode: 2,
+            priority: 20
+        }]
+    },
+
+    {
         name: 'Buzzed',
         img: 'icons/consumables/drinks/alcohol-beer-stein-wooden-brown.webp',
         origin: '',
