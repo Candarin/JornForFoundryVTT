@@ -111,6 +111,9 @@ export let readyHooksIntox = async () => {
             // Update Actor
             if (needToUpdateActor) { await setActorIntoxValues(actor, intoxLevelNew, intoxPointsNewTotal) }
 
+            // Update Effects
+
+
             // Create Chat Message
             if (needChatMessage) {
                 let messageContent = `<div class='dnd5e chat-card item-card'>`
@@ -145,6 +148,7 @@ export async function getActorIntoxValues(actorId) {
     let actorCurrentIntoxLevel = 0;
     let actorCurrentIntoxPoints = 0;
     let actorCurrentIntoxPointsMax = 0;
+    let tempFlag = null;
 
     // Get actor
     let a = game.actors.get(actorId);
@@ -202,6 +206,29 @@ export async function getActorIntoxValues(actorId) {
 export async function setActorIntoxValues(actor, currentIntoxLevel, currentIntoxPoints) {    
     await actor.setFlag('JornForFoundryVTT', 'currentIntoxLevel', currentIntoxLevel);
     await actor.update({ 'system.resources.tertiary.value': currentIntoxPoints, });
+}
+
+export async function updateActorIntoxEffects(actor, actorNewIntoxLevel) {
+
+    // update effects
+    let effects = Array.from(actor.allApplicableEffects());
+    let effectFound = false;
+    for (let i = 0; i < effects.length; i++) {
+        console.log(effects[i]);
+        for (let j = 1; j < jornIntoxEffectData.length; j++) {
+            if (effects[i].name === jornIntoxEffectData[actorNewIntoxLevel].name && actorNewIntoxLevel != 0) {
+                // Enable correct effect if it is found
+                effects[i].update({ disabled: false });
+                effectFound = true;
+            }
+            else if (effects[i].name === jornIntoxEffectData[j].name) {
+                effects[i].update({ disabled: true })
+            }
+        }
+    }
+
+    // create effect if it is not found        
+    if (!effectFound && actorNewIntoxLevel != 0) { await ActiveEffect.implementation.create(jornIntoxEffectData[actorNewIntoxLevel], { parent: actor }) }
 }
 
 export async function onIntoxSavingThrow(event) {
