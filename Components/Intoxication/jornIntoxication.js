@@ -243,7 +243,7 @@ export async function onIntoxSavingThrow(event) {
     let actorCurrentIntoxLevel = 0;
     let actorNewIntoxLevel = 0;
     let actorIntoxLevelsToAdd = 0;
-    let intoxSaveDisadvantage = true;
+    let intoxSaveDisadvantage = false;
 
 
     console.log('Jorn | Intox Saving Throw Data: ');
@@ -281,7 +281,7 @@ export async function onIntoxSavingThrow(event) {
 
     // Check if Disadvantage needs to be applied
     if (a.system.resources.tertiary.max / 2 > a.system.resources.tertiary.value) {        
-        intoxSaveDisadvantage = false;
+        intoxSaveDisadvantage = true;
     }
 
     // Call for saving throw
@@ -419,7 +419,7 @@ export class jornIntox {
         let actorCurrentIntoxLevel = 0;
         let actorNeedsToSave = false;
         let intoxSaveDC = 0;  
-        let intoxSaveDisadvantage = true;
+        let intoxSaveDisadvantage = false;
 
         let a = token.actor;
         // TODO test that actor is valid
@@ -509,7 +509,7 @@ export class jornIntox {
         // Check if points < half
         if (a.system.resources.tertiary.max / 2 > actorCurrentIntoxPoints) {
             actorMoreThanHalfPointsRemain = false;
-            intoxSaveDisadvantage = false;
+            intoxSaveDisadvantage = true;
         }
 
         // Check if a save is needed
