@@ -5,7 +5,7 @@ export const JornModuleName = "Jorn For Foundry VTT";
 export const jornIntoxEffectData = [
     {
         name: 'Sober',
-        img: 'modules/JornForFoundryVTT/icons/drink_ale1.png',
+        icon: 'modules/JornForFoundryVTT/icons/drink_ale1.png',
         origin: '',
         disabled: false,
 
@@ -20,7 +20,7 @@ export const jornIntoxEffectData = [
 
     {
         name: 'Buzzed',
-        img: 'modules/JornForFoundryVTT/icons/drink_ale1.png',
+        icon: 'modules/JornForFoundryVTT/icons/drink_ale1.png',
         origin: '',
         disabled: false,
     
@@ -40,7 +40,7 @@ export const jornIntoxEffectData = [
             },
             {
                 key: "flags.adv-reminder.message.ability.save.cha",
-                value: "Tipsy: Disadvantage on Charisma saves vs Charm",
+                value: "Buzzed: Disadvantage on Charisma saves vs Charm",
                 mode: 0,
                 priority: 20
             }  
@@ -49,7 +49,7 @@ export const jornIntoxEffectData = [
 
     {
         name: 'Jazzed',
-        img: 'modules/JornForFoundryVTT/icons/drink_ale1.png',
+        icon: 'modules/JornForFoundryVTT/icons/drink_ale1.png',
         origin: '',
         disabled: false,
        
@@ -69,7 +69,7 @@ export const jornIntoxEffectData = [
             },
             {
                 key: "flags.adv-reminder.message.ability.save.cha",
-                value: "Tipsy: Disadvantage on Charisma saves vs Charm",
+                value: "Jazzed: Disadvantage on Charisma saves vs Charm",
                 mode: 0,
                 priority: 20
             },  
@@ -90,7 +90,7 @@ export const jornIntoxEffectData = [
 
     {
         name: 'Tipsy',
-        img: 'modules/JornForFoundryVTT/icons/drink_ale1.png',
+        icon: 'modules/JornForFoundryVTT/icons/drink_ale1.png',
         origin: '',
         disabled: false,
 
@@ -149,7 +149,7 @@ export const jornIntoxEffectData = [
 
     {
         name: 'Drunk',
-        img: 'modules/JornForFoundryVTT/icons/drink_ale1.png',
+        icon: 'modules/JornForFoundryVTT/icons/drink_ale1.png',
         origin: '',
         disabled: false,
 
@@ -220,7 +220,7 @@ export const jornIntoxEffectData = [
 
     {
         name: 'Shitfaced',
-        img: 'modules/JornForFoundryVTT/icons/drink_ale1.png',
+        icon: 'modules/JornForFoundryVTT/icons/drink_ale1.png',
         origin: '',
         disabled: false,
 
@@ -303,7 +303,7 @@ export const jornIntoxEffectData = [
 
     {
         name: 'FUBAR',
-        img: 'modules/JornForFoundryVTT/icons/drink_ale1.png',
+        icon: 'modules/JornForFoundryVTT/icons/drink_ale1.png',
         origin: '',
         disabled: false,
 

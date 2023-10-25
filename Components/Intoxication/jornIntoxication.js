@@ -69,7 +69,7 @@ export let readyHooksIntox = async () => {
 
             if (actorIntoxData === false) { return }
             console.log(actorIntoxData);
-            console.log('Jorn | Retrieved Intox values - Level: ' + actorIntoxData.currentIntoxLevel + ', Points: ' + actorIntoxData.currentIntoxPoints + 'Max: ' + actorIntoxData.currentIntoxPointsMax)
+            console.log('Jorn | Retrieved Intox values - Level: ' + actorIntoxData.currentIntoxLevel + ', Points: ' + actorIntoxData.currentIntoxPoints + ' Max: ' + actorIntoxData.currentIntoxPointsMax)
 
 
             // Determine if it was a Long or Short rest
@@ -112,7 +112,7 @@ export let readyHooksIntox = async () => {
             if (needToUpdateActor) { await setActorIntoxValues(actor, intoxLevelNew, intoxPointsNewTotal) }
 
             // Update Effects
-
+            await updateActorIntoxEffects(actor, intoxLevelNew);
 
             // Create Chat Message
             if (needChatMessage) {
@@ -214,7 +214,7 @@ export async function updateActorIntoxEffects(actor, actorNewIntoxLevel) {
     let effects = Array.from(actor.allApplicableEffects());
     let effectFound = false;
     for (let i = 0; i < effects.length; i++) {
-        console.log(effects[i]);
+        // console.log(effects[i]);
         for (let j = 1; j < jornIntoxEffectData.length; j++) {
             if (effects[i].name === jornIntoxEffectData[actorNewIntoxLevel].name && actorNewIntoxLevel != 0) {
                 // Enable correct effect if it is found
@@ -350,7 +350,7 @@ export async function onIntoxSavingThrow(event) {
         let effects = Array.from(a.allApplicableEffects());
         let effectFound = false;
         for (let i = 0; i < effects.length; i++) {
-            console.log(effects[i]);
+            // console.log(effects[i]);
             for (let j = 1; j < jornIntoxEffectData.length; j++) {                
                 if (effects[i].name === jornIntoxEffectData[actorNewIntoxLevel].name) {
                     // Enable correct effect if it is found
